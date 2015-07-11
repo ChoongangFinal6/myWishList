@@ -23,6 +23,7 @@ CREATE TABLE MyWish (
 	name       VARCHAR2(50) NOT NULL, -- 품명
 	price      INTEGER      NOT NULL, -- 금액
 	remainDate DATE         NOT NULL, -- 기한
+	success    NUMBER(1,0)  NULL,     -- 성공여부
 	img        VARCHAR2(50) NULL,     -- 이미지파일명
 	aNo        INTEGER      NOT NULL  -- 계좌번호
 );
@@ -42,9 +43,9 @@ CREATE TABLE Account (
 	aNo     INTEGER      NOT NULL, -- 일련번호
 	email   VARCHAR2(50) NOT NULL, -- 아이디(이메일)
 	bank    VARCHAR2(20) NOT NULL, -- 은행명
-	account INTEGER      NOT NULL  -- 계좌번호
+	account INTEGER      NOT NULL,  -- 계좌번호
+	money   INTEGER      NULL      -- 잔고
 );
-
 -- Account
 ALTER TABLE Account
 	ADD

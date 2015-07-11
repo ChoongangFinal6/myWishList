@@ -1,6 +1,6 @@
 package model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * mNo        INTEGER      NOT NULL, -- 일련번호
@@ -8,6 +8,7 @@ import java.sql.Timestamp;
  * name       VARCHAR2(50) NOT NULL, -- 품명
  * price      INTEGER      NOT NULL, -- 금액
  * remainDate DATE         NOT NULL, -- 기한
+ * success    number(1,0)  null      -- 성공여부, 0(기본값)은 아직, 1은 성공, 2는 실패(로 할지 고려중 sysdate>remaindate에 0이면 실패 고를 수 있음)
  * img        VARCHAR2(50) NULL,     -- 이미지파일명
  * aNo        INTEGER      NOT NULL  -- 계좌번호
  */
@@ -16,7 +17,8 @@ public class MyWishDto {
 	private String email;
 	private String name;
 	private int price;
-	private Timestamp remainDate;
+	private Date remainDate;
+	private int success;
 	private String img;
 	private int ano;
 	public int getMno() {
@@ -43,10 +45,10 @@ public class MyWishDto {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public Timestamp getRemainDate() {
+	public Date getRemainDate() {
 		return remainDate;
 	}
-	public void setRemainDate(Timestamp remainDate) {
+	public void setRemainDate(Date remainDate) {
 		this.remainDate = remainDate;
 	}
 	public String getImg() {
@@ -54,6 +56,13 @@ public class MyWishDto {
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	
+	public int getSuccess() {
+		return success;
+	}
+	public void setSuccess(int success) {
+		this.success = success;
 	}
 	public int getAno() {
 		return ano;
@@ -67,7 +76,8 @@ public class MyWishDto {
 	@Override
 	public String toString() {
 		return "MyWishDto [mno=" + mno + ", email=" + email + ", name=" + name + ", price=" + price + ", remainDate="
-				+ remainDate + ", img=" + img + ", ano=" + ano + "]";
+				+ remainDate + ", success=" + success + ", img=" + img + ", ano=" + ano + "]";
 	}
+
 	
 }

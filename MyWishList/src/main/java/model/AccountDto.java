@@ -11,6 +11,7 @@ public class AccountDto {
 	private String email;
 	private String bank;
 	private int account;
+	private int money;
 	public int getaNo() {
 		return aNo;
 	}
@@ -35,12 +36,20 @@ public class AccountDto {
 	public void setAccount(int account) {
 		this.account = account;
 	}
+	
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
 	public AccountDto() {
 		super();
 	}
 	@Override
 	public String toString() {
-		return "AccountDto [aNo=" + aNo + ", email=" + email + ", bank=" + bank + ", account=" + account + "]";
+		return "AccountDto [aNo=" + aNo + ", email=" + email + ", bank=" + bank + ", account=" + account + ", money="
+				+ money + "]";
 	}
 	
 }
