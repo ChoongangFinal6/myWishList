@@ -22,4 +22,12 @@
 	<select id="bankSearch" parameterType="Account" resultType="Account">
 		select * from Account where bank=#{bank} and email=#{email}
 	</select>
+	
+	<select id="passwordChk" parameterType="Account" resultType="int">
+		select count(*) from Account where bank=#{bank} and password=#{password} and email=#{email}
+	</select>
+	
+	<update id="bankBuyUpdate" parameterType="Account">
+		update Account set money=#{money} where bank=#{bank} and email=#{email}
+	</update>
 </mapper>

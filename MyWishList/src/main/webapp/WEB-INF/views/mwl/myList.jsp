@@ -35,7 +35,11 @@
 		<div id="chart" style="display: none;">
 			<div id="wishChart" style="min-width: 310px; height: 400px; width:500px; margin: 0 auto"></div>
 		</div>
-		<input type="button" id="buyBtn" value="구입">
+		<input type="button" id="buyBtn" style="display: none;" value="구입">
+		<div id="buyDiv" style="display: none;">
+			<input type="password" id="password" placeholder="암호">
+			<input type="button" id="buy" value="구입하기">
+		</div>
 		<div id="pageForm">
 			<c:if test="${pg.startPage > pg.pageBlock }">
 				<a href="myList.html?currentPage=${pg.startPage-pg.pageBlock }">[이전]</a>

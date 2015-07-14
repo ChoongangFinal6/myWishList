@@ -20,13 +20,11 @@ public class AccountDaoImpl implements AccountDao{
 
 	public int searchAccount(String account) {
 		int searchAc = session.selectOne("searchAccount", account);
-		System.out.println("searchAc : " + searchAc);
 		return searchAc;
 	}
 
 	public List<AccountDto> bankList(String email) {
 		List<AccountDto> banklist = session.selectList("bankList", email);
-		System.out.println(banklist);
 		return banklist;
 	}
 	
@@ -35,9 +33,19 @@ public class AccountDaoImpl implements AccountDao{
 		return banksearch;
 	}
 
-	@Override
 	public int getBankMoney(String bank) {
 		int bankMoney = session.selectOne("getBankMoney", bank);
 		return bankMoney;
 	}
+
+	public int bankBuyUpdate(AccountDto accountDto) {
+		int bankbuyUpdate = session.update("bankBuyUpdate", accountDto);
+		return bankbuyUpdate;
+	}
+
+	public int passwordChk(AccountDto accountDto) {
+		int paswordchk = session.selectOne("passwordChk", accountDto);
+		return paswordchk;
+	}
+
 }

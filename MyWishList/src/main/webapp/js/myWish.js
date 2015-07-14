@@ -70,7 +70,9 @@ $(function () {
 		$(this).click(function(){
 			var sendData = $(this).find($('.wishNo')).val();
 			var params = "wishNo=" + sendData;
-			
+			$('#bankSelect').prop('value', 'All');
+			$('#buyBtn').css('display', 'none');
+			$('#buyDiv').css('display', 'none');
 			$.getJSON('myWishChart.html', params, function(data) {
 				$('#chart').css('display', 'block');
 				$('#bankSelect').css('display', 'block');
@@ -79,10 +81,6 @@ $(function () {
 				option.series[0].data=data;
 				$('#wishChart').highcharts(option);
 		    });
-			
-			$.get('myWishMoney.html', param, function(data) {
-				$('#imsiWishNoMoney').val(data);
-			});
 		});
 	});
 	
@@ -95,16 +93,44 @@ $(function () {
 			$('#wishChart').highcharts(option);
 			$('#imsiBank').val(bank);
 	    });
-		var param = "bank=" + bank;
-		$.get('bankMoney.html', param, function(data) {
-			$('#imsiBankMoney').val(data);
-		});
+		if(bank != 'All'){
+			$.get('buyCheck.html', sendData, function(data) {
+				if(data > 0){
+					$('#buyBtn').css('display', 'block');
+				}else{
+					$('#buyBtn').css('display', 'none');
+					$('#buyDiv').css('display', 'none');
+				}
+			});
+		}else{
+			$('#buyBtn').css('display', 'none');
+			$('#buyDiv').css('display', 'none');
+		}
 	});
 	
 	$('#buyBtn').click(function(){
-		var sendData = "bank=" + $(this).val() + "&wishNo=" + $('#imsiWishNo').val();
-		$.get(".html", sendData, function(data) {
-			
+		$('#buyDiv').css('display', 'block');
+		$(this).css('display', 'none');
+	});
+	
+	$('#buy').click(function(){
+		var result = "";
+		var bank = $('#bankSelect').val();
+		var wishNo = $('#imsiWishNo').val();
+		var password = $('#password').val();
+		
+		var bankName = "bank=" + bank + "&password=" + password;
+		$.get("passChk.html", bankName, function(data) {
+			result = data;
 		});
+		if(data == 1){
+			var sendData = "bank=" + bank + "&wishNo=" + wishNo;
+			$.get("wishBuy.html", sendData, function(data) {
+				alert("구매에 성공하셨습니다");
+				location.href='myList.html';
+			});
+		}else{
+			alert("비밀번호가 틀렸습니다.");
+		}
 	});
 });

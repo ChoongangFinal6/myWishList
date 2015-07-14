@@ -21,7 +21,7 @@
   	</select>
 	
 	<select id="myWishList" parameterType="MyWish" resultMap="MyWishResult">
-		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} order by wishNo) a) where rn between #{start} and #{end}
+		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} and success=0 order by wishNo) a) where rn between #{start} and #{end}
 	</select>
 	
 	<insert id="insertMyWish" parameterType="MyWish">
@@ -31,5 +31,10 @@
 	    insert into MyWish values(
 	    #{wishNo}, #{email}, #{product}, #{price}, #{remainDate}, 0, #{img, jdbcType=VARCHAR})
   	</insert>
+  	
+  	<update id="myWishUpdate" parameterType="MyWish">
+  		update MyWish set success=#{success} where wishNo=#{wishNo}
+  	</update>
+  	
 	<!-- Select with no parameters using the result map for Account class. -->
 </mapper>

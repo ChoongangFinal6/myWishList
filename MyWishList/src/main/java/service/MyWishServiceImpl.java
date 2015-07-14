@@ -26,4 +26,8 @@ public class MyWishServiceImpl implements MyWishService{
 		return mw.wishInfo(wishNo);
 	}
 
+	public int myWishUpdate(MyWishDto myWishDto) {
+		return mw.myWishUpdate(myWishDto);
+	}
+
 }

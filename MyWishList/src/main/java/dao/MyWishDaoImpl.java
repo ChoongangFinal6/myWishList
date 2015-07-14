@@ -27,4 +27,9 @@ public class MyWishDaoImpl implements MyWishDao{
 		MyWishDto wishinfo = session.selectOne("wishInfo", wishNo);
 		return wishinfo;
 	}
+
+	public int myWishUpdate(MyWishDto myWishDto) {
+		int mywishUpddate = session.update("myWishUpdate", myWishDto);
+		return mywishUpddate;
+	}
 }
