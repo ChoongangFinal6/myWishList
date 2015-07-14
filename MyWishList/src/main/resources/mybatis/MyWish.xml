@@ -15,6 +15,10 @@
 	<select id="total" parameterType="String" resultType="int">
  	 	select count(*) from MyWish where email=#{email}
   	</select>
+  	
+	<select id="wishInfo" parameterType="int" resultType="MyWish">
+ 	 	select * from MyWish where wishNo=#{wishNo}
+  	</select>
 	
 	<select id="myWishList" parameterType="MyWish" resultMap="MyWishResult">
 		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} order by wishNo) a) where rn between #{start} and #{end}

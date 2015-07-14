@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.AccountService;
 import service.MyWishService;
@@ -44,15 +45,18 @@ public class MWLController {
 		myWishDto.setEnd(pg.getEnd());
 		List<MyWishDto> myWishList = ms.wishList(myWishDto);
 		
-		
+		List<AccountDto> bankList = as.bankList(email);
 		
 		model.addAttribute("myWishList", myWishList);
+		model.addAttribute("bankList", bankList);
 		model.addAttribute("pg",pg);
+		
 		return "mwl/myList";
 	}
 	
+	/*
 	@RequestMapping(value = "myListChange")
-	public String myListChange(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+	public String myListChange(HttpServletRequest req, HttpServletResponse rep, Model model) {
 		
 		String currentPage = req.getParameter("currentPage");
 		
@@ -75,7 +79,7 @@ public class MWLController {
 	}
 	
 	@RequestMapping(value = "pageFormChange")
-	public String pageFormChange(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+	public String pageFormChange(HttpServletRequest req, HttpServletResponse rep, Model model) {
 		
 		String currentPage = req.getParameter("currentPage");
 		
@@ -90,7 +94,7 @@ public class MWLController {
 		
 		return "mwl/pageFormChange";
 	}
-	
+	*/
 	@RequestMapping(value = "myContent")
 	public String content() {
 		return "mwl/myWishContent";
@@ -115,7 +119,7 @@ public class MWLController {
 		
 		return null;
 	}
-	
+	/*
 	@RequestMapping(value = "bankSearch")
 	public String bankSearch(HttpServletRequest req, HttpServletResponse rep) throws IOException {
 		rep.setContentType("text/html; charset=utf-8");
@@ -128,6 +132,133 @@ public class MWLController {
 		result = as.searchAccount(account);
 		
 		out.print(result);
+		
+		return null;
+	}*/
+	
+	@RequestMapping(value="myWishChart", method=RequestMethod.GET)
+	public String myWishChart(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+		rep.setContentType("text/html; charset=utf-8");
+		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
+		
+		session = req.getSession();		
+		String email = session.getAttribute("email").toString();
+		
+		MyWishDto wishInfo = ms.wishInfo(wishNo);
+		
+		List<AccountDto> bankList = as.bankList(email);
+		
+		String str = "[{\"name\":\"목표금액\", \"y\": " + wishInfo.getPrice() +"},";
+		for (int i = 0; i < bankList.size(); i++) {
+			str += "{\"name\" : \"" + bankList.get(i).getBank() + "\",";
+			if(i == bankList.size()-1){
+				str += "\"y\" : " + bankList.get(i).getMoney() + "}";
+			}else{
+				str += "\"y\" : " + bankList.get(i).getMoney() + "}, ";	
+			}
+		}
+		str += "]";
+		
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		out.print(str);
+		
+		System.out.println(str);
+		
+		return null;
+	}
+	
+	@RequestMapping(value="bankSelect", method=RequestMethod.GET)
+	public String bankSelect(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		
+		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
+
+		String bank = req.getParameter("bank");
+		
+		MyWishDto wishInfo = ms.wishInfo(wishNo);
+		
+		System.out.println(bank);
+		
+		String str = "";
+		
+		session = req.getSession();		
+		String email = session.getAttribute("email").toString();
+		if(bank.equals("All")){
+			
+			List<AccountDto> bankList = as.bankList(email);
+			
+			str = "[{\"name\":\"목표금액\", \"y\": " + wishInfo.getPrice() +"},";
+			for (int i = 0; i < bankList.size(); i++) {
+				str += "{\"name\" : \"" + bankList.get(i).getBank() + "\",";
+				if(i == bankList.size()-1){
+					str += "\"y\" : " + bankList.get(i).getMoney() + "}";
+				}else{
+					str += "\"y\" : " + bankList.get(i).getMoney() + "}, ";	
+				}
+			}
+			str += "]";
+			
+		}else{
+			AccountDto account = new AccountDto();
+			
+			account.setEmail(email);
+			account.setBank(bank);
+			
+			AccountDto bankSearch = as.bankSearch(account);
+			
+			str = "[{\"name\":\"목표금액\", \"y\": " + wishInfo.getPrice() +"},";
+				str += "{\"name\" : \"" + bankSearch.getBank() + "\",";
+				str += "\"y\" : " + bankSearch.getMoney() + "}]";
+		}
+		out.print(str);
+		
+		System.out.println(str);
+		
+		return null;
+	}
+	
+	@RequestMapping(value="bankMoney", method=RequestMethod.GET)
+	public String bankMoney(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		
+		String bank = req.getParameter("bank");
+		
+		session = req.getSession();		
+		String email = session.getAttribute("email").toString();
+		
+		AccountDto account = new AccountDto();
+		
+		account.setEmail(email);
+		account.setBank(bank);
+		
+		AccountDto bankSearch = as.bankSearch(account);
+		
+		int bankMoney = bankSearch.getMoney();
+		
+		out.print(bankMoney);
+		
+		System.out.println(bankMoney);
+		
+		return null;
+	}
+	
+	@RequestMapping(value="myWishMoney", method=RequestMethod.GET)
+	public String myWishMoney(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		
+		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
+		
+		MyWishDto wishInfo = ms.wishInfo(wishNo);
+		
+		int wishMoney = wishInfo.getPrice();
+		
+		out.print(wishMoney);
+		
+		System.out.println(wishMoney);
 		
 		return null;
 	}

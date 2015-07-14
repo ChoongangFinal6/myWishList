@@ -22,4 +22,9 @@ public class MyWishDaoImpl implements MyWishDao{
 		int totals = session.selectOne("total", email);
 		return totals;
 	}
+
+	public MyWishDto wishInfo(int wishNo) {
+		MyWishDto wishinfo = session.selectOne("wishInfo", wishNo);
+		return wishinfo;
+	}
 }

@@ -20,7 +20,7 @@
 		<option value="신협">신협</option>
 	</select><br>
 	계좌번호 <input type="text" name="account" id="account"><br><div id="warning"></div>
-	<!-- 비밀번호 <input type="password" name="password" id="password"><br> -->
+	비밀번호 <input type="password" name="password" id="password"><br>
 	현재금액 <input type="text" name="money" id="money"><br>
 	<input type="button" id="addBank" value="등록">
 	<input type="button" value="취소">

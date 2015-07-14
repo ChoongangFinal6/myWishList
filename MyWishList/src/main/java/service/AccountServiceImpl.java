@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import model.AccountDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +20,14 @@ public class AccountServiceImpl implements AccountService{
 
 	public int searchAccount(String account) {
 		return aDao.searchAccount(account);
+	}
+
+	public List<AccountDto> bankList(String email) {
+		return aDao.bankList(email);
+	}
+
+	@Override
+	public AccountDto bankSearch(AccountDto account) {
+		return aDao.bankSearch(account);
 	}
 }

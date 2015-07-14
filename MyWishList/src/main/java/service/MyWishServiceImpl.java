@@ -22,4 +22,8 @@ public class MyWishServiceImpl implements MyWishService{
 		return mw.total(email);
 	}
 
+	public MyWishDto wishInfo(int wishNo) {
+		return mw.wishInfo(wishNo);
+	}
+
 }
