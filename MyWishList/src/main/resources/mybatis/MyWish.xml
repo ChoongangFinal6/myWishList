@@ -20,6 +20,15 @@
 		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} order by wishNo) a) where rn between #{start} and #{end}
 	</select>
 	
+	<select id="selectItem" parameterType="MyWish" resultType="MyWish">
+		select * from MyWish where wishNo = #{wishNo, jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
+	</select>
+	<select id="isIn" parameterType="MyWish" resultType="integer">
+		select count(wishNo) from MyWish where wishNo = #{wishNo, jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
+	</select>
+	<update id="updateMyWish" parameterType="MyWish">
+		update MyWish set product = #{product}, price = #{price}, remainDate = #{remainDate}, img = #{img} where wishNo = ${wishNo}
+	</update>
 	<insert id="insertMyWish" parameterType="MyWish">
 	  	<selectKey order="BEFORE" keyProperty="wishNo" resultType="int">
 	  		select nvl(max(wishNo),0)+1 id from MyWish

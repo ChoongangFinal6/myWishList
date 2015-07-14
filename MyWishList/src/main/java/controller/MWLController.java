@@ -14,7 +14,9 @@ import model.MyWishDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import service.AccountService;
 import service.MyWishService;
@@ -95,6 +97,35 @@ public class MWLController {
 	public String content() {
 		return "mwl/myWishContent";
 	}
+
+	@RequestMapping(value = "myWishWrite", method = RequestMethod.POST)
+	public String myWishWrite(@ModelAttribute("myWishDto") MyWishDto myWishDto, HttpServletRequest req) {
+		session = req.getSession();
+		String email = session.getAttribute("email").toString();
+		
+		myWishDto.setEmail(email);
+		String img= "";
+		myWishDto.setImg(img);
+		//myWishDto.setRemainDate(remainDate);
+		System.out.println(myWishDto.getRemainDate());
+		int result = ms.write(myWishDto);
+		return "forward:myList";
+	}
+	
+	@RequestMapping(value = "myWishUpdate", method = RequestMethod.GET)
+	public String myWishUpdate(int wishNo,  HttpSession session, HttpServletResponse rep) throws IOException {
+		String email = session.getAttribute("email").toString();
+		
+		String result = "";
+		
+		MyWishDto myWish = ms.selectItem(email, wishNo);
+		result = "{\"wishNo\":\""+myWish.getWishNo()+"\",\"product\":\""+myWish.getProduct()+"\",\"price\":\""+myWish.getPrice()+"\",\"remainDate\":\""+myWish.getRemainDate()+"\",\"success\":\""+myWish.getSuccess()+"\",\"img\":\""+myWish.getImg()+"\"}";
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		out.print(result);
+		return "";
+	}
+	
 	
 	@RequestMapping(value = "bankCreateForm")
 	public String bankCreateForm(HttpServletRequest request, Model model) {

@@ -22,4 +22,25 @@ public class MyWishDaoImpl implements MyWishDao{
 		int totals = session.selectOne("total", email);
 		return totals;
 	}
+
+	@Override
+	public int write(MyWishDto myWishDto) {
+		int isIn = session.selectOne("isIn", myWishDto);
+		int result = 0;
+		if (isIn == 1 ) {
+			result = session.update("updateMyWish",myWishDto);
+		} else {
+			result = session.insert("insertMyWish", myWishDto);
+		}
+		return result;
+	}
+
+	@Override
+	public MyWishDto selectItem(String email, int wishNo) {
+		MyWishDto mwd= new MyWishDto();
+		mwd.setEmail(email);
+		mwd.setWishNo(wishNo);
+		MyWishDto myWishDto = session.selectOne("selectItem", mwd);
+		return myWishDto;
+	}
 }

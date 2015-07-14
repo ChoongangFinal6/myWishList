@@ -22,4 +22,14 @@ public class MyWishServiceImpl implements MyWishService{
 		return mw.total(email);
 	}
 
+	@Override
+	public int write(MyWishDto myWishDto) {
+		return mw.write(myWishDto);
+	}
+
+	@Override
+	public MyWishDto selectItem(String email, int wishNo) {
+		return mw.selectItem(email,wishNo);
+	}
+
 }
