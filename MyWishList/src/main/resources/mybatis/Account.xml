@@ -4,11 +4,16 @@
 <mapper namespace="Account">
 	<!-- Use type aliases to avoid typing the full classname every time. -->
 	<resultMap id="AccountResult" type="Account">
-		<result property="aNo" column="aNo" />
+		<result property="account" column="account" />
 		<result property="email" column="email" />
 		<result property="bank" column="bank" />
-		<result property="account" column="account" />
 		<result property="money" column="money" />
 	</resultMap>
 	<!-- Select with no parameters using the result map for Account class. -->
+	<insert id="createAc" parameterType="Account">
+		insert into Account values(#{account}, #{email}, #{bank}, #{money})
+	</insert>
+	<select id="searchAccount" parameterType="String" resultType="int">
+		select count(*) from Account where account=#{account}
+	</select>
 </mapper>

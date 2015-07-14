@@ -1,23 +1,16 @@
 package model;
 
 /**
- * aNo     INTEGER      NOT NULL, -- 일련번호
  * email   VARCHAR2(50) NOT NULL, -- 아이디(이메일)
  * bank    VARCHAR2(20) NOT NULL, -- 은행명
  * account INTEGER      NOT NULL  -- 계좌번호
+ * money   INTEGER      NULL      -- 잔고
  */
 public class AccountDto {
-	private int aNo;
+	private String account;
 	private String email;
 	private String bank;
-	private int account;
 	private int money;
-	public int getaNo() {
-		return aNo;
-	}
-	public void setaNo(int aNo) {
-		this.aNo = aNo;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -30,10 +23,10 @@ public class AccountDto {
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
-	public int getAccount() {
+	public String getAccount() {
 		return account;
 	}
-	public void setAccount(int account) {
+	public void setAccount(String account) {
 		this.account = account;
 	}
 	
@@ -48,7 +41,7 @@ public class AccountDto {
 	}
 	@Override
 	public String toString() {
-		return "AccountDto [aNo=" + aNo + ", email=" + email + ", bank=" + bank + ", account=" + account + ", money="
+		return "AccountDto [email=" + email + ", bank=" + bank + ", account=" + account + ", money="
 				+ money + "]";
 	}
 	

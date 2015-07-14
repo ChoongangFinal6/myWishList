@@ -4,14 +4,28 @@
 <mapper namespace="MyWish">
 	<!-- Use type aliases to avoid typing the full classname every time. -->
 	<resultMap id="MyWishResult" type="MyWish">
-		<result property="mNo" column="mNo" />
+		<result property="wishNo" column="wishNo" />
 		<result property="email" column="email" />
-		<result property="name" column="name" />
+		<result property="product" column="product" />
 		<result property="price" column="price" />
 		<result property="remainDate" column="remainDate" />
 		<result property="success" column="success" />
 		<result property="img" column="img" />
-		<result property="aNo" column="aNo" />
 	</resultMap>
+	<select id="total" parameterType="String" resultType="int">
+ 	 	select count(*) from MyWish where email=#{email}
+  	</select>
+	
+	<select id="myWishList" parameterType="MyWish" resultMap="MyWishResult">
+		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} order by wishNo) a) where rn between #{start} and #{end}
+	</select>
+	
+	<insert id="insertMyWish" parameterType="MyWish">
+	  	<selectKey order="BEFORE" keyProperty="wishNo" resultType="int">
+	  		select nvl(max(wishNo),0)+1 id from MyWish
+	  	</selectKey>
+	    insert into MyWish values(
+	    #{wishNo}, #{email}, #{product}, #{price}, #{remainDate}, 0, #{img, jdbcType=VARCHAR})
+  	</insert>
 	<!-- Select with no parameters using the result map for Account class. -->
 </mapper>
