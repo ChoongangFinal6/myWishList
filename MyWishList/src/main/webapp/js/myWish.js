@@ -119,16 +119,22 @@ function modify(wishNo) {
 		$('#wishNo').val(data.wishNo);
 	});
 }
+function newItem() {
+	$('.input').val();
+	
+}
 function del(wishNo) {
-	var sendData = "wishNo="+wishNo;
-	$.ajax({
-		  url: "myWishDelete.html",
-		  data: sendData,
-			async : true,
-			success : function(data) {
-				if (data == 1) {
-					location.reload();
+	if(confirm("삭제하시겠습니까")) {
+		var sendData = "wishNo="+wishNo;
+		$.ajax({
+			  url: "myWishDelete.html",
+			  data: sendData,
+				async : true,
+				success : function(data) {
+					if (data == 1) {
+						location.reload();
+					}
 				}
-			}
-	});
+		});
+	}
 }

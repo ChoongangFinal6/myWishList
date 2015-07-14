@@ -14,10 +14,14 @@ import model.MyWishDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import upload.FileUpload;
 import service.AccountService;
 import service.MyWishService;
 import service.Paging;
@@ -102,15 +106,22 @@ public class MWLController {
 	}
 
 	@RequestMapping(value = "myWishWrite", method = RequestMethod.POST)
-	public String myWishWrite(@ModelAttribute("myWishDto") MyWishDto myWishDto, HttpServletRequest req) {
+	public String myWishWrite(@ModelAttribute("myWishDto") MyWishDto myWishDto, BindingResult bindingResult, Model model, HttpServletRequest req, MultipartHttpServletRequest multipartRequest) throws IOException {
+		int result = 0;
 		session = req.getSession();
 		String email = session.getAttribute("email").toString();
+		MultipartFile file = (MultipartFile) multipartRequest.getFile("img");
 		
+		String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
+		  FileUpload.fileUpload(file, path);
+		  model.addAttribute("path", "/recipe/image");
+		  
+		myWishDto.setImg(file.getOriginalFilename());
 		myWishDto.setEmail(email);
-		String img= "";
-		myWishDto.setImg(img);
-		//myWishDto.setRemainDate(remainDate);
-		int result = ms.write(myWishDto);
+//		myWishDto.setRemainDate(remainDate);
+		result = ms.write(myWishDto);
+		
+		if (result == 0) System.out.println("에러");
 		return "redirect:myList.html";
 	}
 	

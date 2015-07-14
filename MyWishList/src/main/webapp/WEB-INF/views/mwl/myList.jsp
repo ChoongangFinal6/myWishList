@@ -55,12 +55,12 @@
 		<input type="hidden" id="imsiBankMoney" value="">
 	</div>
 	<div id="writeDiv">
-		<form action="myWishWrite.html" method="POST">
-			<span>품명</span><input type="text" name="product" id="product"><br>
-			<span>금액</span><input type="text" name="price" id="price"><br>
-			<span>기한</span><input type="text" name="remainDate" id="remainDate"><br>
-			<span>이미지</span><input type="text" name="img" id="img"><br>
-			<span>성공여부</span><input type="text" name="success" id="success"><br>
+		<form action="myWishWrite.html" method="POST" enctype="multipart/form-data" name="myWishDto">
+			<span>품명</span><input type="text" name="product" id="product" class="input"><br>
+			<span>금액</span><input type="text" name="price" id="price" class="input"><br>
+			<span>기한</span><input type="date" name="remainDate" id="remainDate" class="input"><br>
+			<span>이미지</span><input type="file" name="img" id="img" class="input"><br>
+			<span>성공여부</span><input type="text" name="success" id="success" class="input"><br>
 			<input type="hidden" name="wishNo" id="wishNo">
 			<input type="submit" value="입력">
 			<input type="button" value="취소">
