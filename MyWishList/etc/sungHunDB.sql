@@ -51,15 +51,6 @@ select * from account;
 
 delete ACCOUNT;
 
--- MyWish
-ALTER TABLE MyWish
-	ADD
-		CONSTRAINT PK_MyWish -- MyWish 기본키
-		PRIMARY KEY (
-			mNo,   -- 일련번호
-			email, -- 아이디(이메일)
-			aNo    -- 계좌번호
-		);
 
 -- Account
 CREATE TABLE Account (
@@ -70,25 +61,8 @@ CREATE TABLE Account (
 	money  	 INTEGER      NULL      -- 잔고
 );
 
-insert into Account values('110-028-383568', 'ch@gmail.com', '신한', 200000);
-insert into Account values('130-331-358612', 'ch@gmail.com', '농협', 100000);
-insert into Account values('140-125-648532', 'ch@gmail.com', '신협', 50000);
-insert into Account values('110-835-872496', 'ch@gmail.com', '신한', 7000);
+insert into Account values('110-028-383568', '123', 'ch@gmail.com', '신한', 200000);
+insert into Account values('130-331-358612', '123', 'ch@gmail.com', '농협', 100000);
+insert into Account values('140-125-648532', '123', 'ch@gmail.com', '신협', 50000);
+insert into Account values('110-835-872496', '123', 'ch@gmail.com', '신한', 7000);
 
--- Account
-ALTER TABLE Account
-	ADD
-		CONSTRAINT PK_Account -- Account 기본키
-		PRIMARY KEY (
-			aNo -- 일련번호
-		);
--- MyWish
-ALTER TABLE MyWish
-	ADD
-		CONSTRAINT FK_Account_TO_MyWish -- Account -> MyWish
-		FOREIGN KEY (
-			aNo -- 계좌번호
-		)
-		REFERENCES Account ( -- Account
-			aNo -- 일련번호
-		);
