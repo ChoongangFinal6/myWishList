@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Date;
 
 /**
  * email      VARCHAR2(50) NOT NULL, -- 아이디(이메일)

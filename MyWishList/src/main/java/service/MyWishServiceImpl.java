@@ -31,5 +31,13 @@ public class MyWishServiceImpl implements MyWishService{
 	public MyWishDto selectItem(String email, int wishNo) {
 		return mw.selectItem(email,wishNo);
 	}
+	public MyWishDto wishInfo(int wishNo) {
+		return mw.wishInfo(wishNo);
+	}
+
+	@Override
+	public int delete(String email, int wishNo) {
+		return mw.delete(email, wishNo);
+	}
 
 }

@@ -15,6 +15,10 @@
 	<select id="total" parameterType="String" resultType="int">
  	 	select count(*) from MyWish where email=#{email}
   	</select>
+  	
+	<select id="wishInfo" parameterType="int" resultType="MyWish">
+ 	 	select * from MyWish where wishNo=#{wishNo}
+  	</select>
 	
 	<select id="myWishList" parameterType="MyWish" resultMap="MyWishResult">
 		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} order by wishNo) a) where rn between #{start} and #{end}
@@ -26,6 +30,9 @@
 	<select id="isIn" parameterType="MyWish" resultType="integer">
 		select count(wishNo) from MyWish where wishNo = #{wishNo, jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
 	</select>
+	<delete id="delete" parameterType="MyWish">
+		delete from MyWish where wishNo = #{wishNo, jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
+	</delete>
 	<update id="updateMyWish" parameterType="MyWish">
 		update MyWish set product = #{product}, price = #{price}, remainDate = #{remainDate}, img = #{img} where wishNo = ${wishNo}
 	</update>

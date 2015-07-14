@@ -9,4 +9,6 @@ public interface MyWishDao {
 	public int total(String email);
 	public int write(MyWishDto myWishDto);
 	public MyWishDto selectItem(String email, int wishNo);
+	public MyWishDto wishInfo(int wishNo);
+	public int delete(String email, int wishNo);
 }

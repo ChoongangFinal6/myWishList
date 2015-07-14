@@ -6,14 +6,20 @@
 	<resultMap id="AccountResult" type="Account">
 		<result property="account" column="account" />
 		<result property="email" column="email" />
+		<result property="password" column="password" />
 		<result property="bank" column="bank" />
 		<result property="money" column="money" />
 	</resultMap>
 	<!-- Select with no parameters using the result map for Account class. -->
 	<insert id="createAc" parameterType="Account">
-		insert into Account values(#{account}, #{email}, #{bank}, #{money})
+		insert into Account values(#{account}, #{email}, #{password}, #{bank}, #{money})
 	</insert>
-	<select id="searchAccount" parameterType="String" resultType="int">
-		select count(*) from Account where account=#{account}
+	
+	<select id="bankList" parameterType="String" resultMap="AccountResult">
+		select * from Account where email=#{email}
+	</select>
+	
+	<select id="bankSearch" parameterType="Account" resultType="Account">
+		select * from Account where bank=#{bank} and email=#{email}
 	</select>
 </mapper>

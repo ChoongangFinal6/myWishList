@@ -61,8 +61,6 @@ CREATE TABLE Account (
 	money  	 INTEGER      NULL      -- 잔고
 );
 
-insert into Account values('110-028-383568', '123', 'ch@gmail.com', '신한', 200000);
-insert into Account values('130-331-358612', '123', 'ch@gmail.com', '농협', 100000);
-insert into Account values('140-125-648532', '123', 'ch@gmail.com', '신협', 50000);
-insert into Account values('110-835-872496', '123', 'ch@gmail.com', '신한', 7000);
-
+insert into Account values('130-331-358612', 'ch@gmail.com', '123', '농협', 100000);
+insert into Account values('140-125-648532', 'ch@gmail.com', '123', '신협', 50000);
+insert into Account values('110-835-872496', 'ch@gmail.com', '123', '신한', 7000);
