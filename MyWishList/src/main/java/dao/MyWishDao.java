@@ -11,4 +11,5 @@ public interface MyWishDao {
 	public MyWishDto selectItem(String email, int wishNo);
 	public MyWishDto wishInfo(int wishNo);
 	public int delete(String email, int wishNo);
+	public int myWishUpdate(MyWishDto myWishDto);
 }

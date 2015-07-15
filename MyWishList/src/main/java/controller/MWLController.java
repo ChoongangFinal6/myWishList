@@ -111,16 +111,16 @@ public class MWLController {
 		session = req.getSession();
 		String email = session.getAttribute("email").toString();
 		MultipartFile file = (MultipartFile) multipartRequest.getFile("img");
-		
-		String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
-		  FileUpload.fileUpload(file, path);
-		  model.addAttribute("path", "/recipe/image");
-		  
-		myWishDto.setImg(file.getOriginalFilename());
+		System.out.println(file);
+		if (file != null) {
+			String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
+			FileUpload.fileUpload(file, path);
+			myWishDto.setImg(file.getOriginalFilename());
+		}
 		myWishDto.setEmail(email);
 //		myWishDto.setRemainDate(remainDate);
+		System.out.println("입력때 : "+myWishDto.toString());
 		result = ms.write(myWishDto);
-		
 		if (result == 0) System.out.println("에러");
 		return "redirect:myList.html";
 	}
@@ -133,6 +133,7 @@ public class MWLController {
 		MyWishDto myWish = ms.selectItem(email, wishNo);
 		myWish.setRemainDate(myWish.getRemainDate().substring(0, 10));
 		result = "{\"wishNo\":\""+myWish.getWishNo()+"\",\"product\":\""+myWish.getProduct()+"\",\"price\":\""+myWish.getPrice()+"\",\"remainDate\":\""+myWish.getRemainDate()+"\",\"success\":\""+myWish.getSuccess()+"\",\"img\":\""+myWish.getImg()+"\"}";
+		System.out.println(result);
 		rep.setContentType("text/html; charset=utf-8");
 		PrintWriter out = rep.getWriter();
 		out.print(result);
@@ -211,9 +212,7 @@ public class MWLController {
 		rep.setContentType("text/html; charset=utf-8");
 		PrintWriter out = rep.getWriter();
 		out.print(str);
-		
-		System.out.println(str);
-		
+				
 		return null;
 	}
 	
@@ -227,9 +226,7 @@ public class MWLController {
 		String bank = req.getParameter("bank");
 		
 		MyWishDto wishInfo = ms.wishInfo(wishNo);
-		
-		System.out.println(bank);
-		
+				
 		String str = "";
 		
 		session = req.getSession();		
@@ -263,16 +260,16 @@ public class MWLController {
 		}
 		out.print(str);
 		
-		System.out.println(str);
 		
 		return null;
 	}
 	
-	@RequestMapping(value="bankMoney", method=RequestMethod.GET)
-	public String bankMoney(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+	@RequestMapping(value="buyCheck", method=RequestMethod.GET)
+	public String buyCheck(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
 		rep.setContentType("text/html; charset=utf-8");
 		PrintWriter out = rep.getWriter();
 		
+		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
 		String bank = req.getParameter("bank");
 		
 		session = req.getSession();		
@@ -281,33 +278,88 @@ public class MWLController {
 		AccountDto account = new AccountDto();
 		
 		account.setEmail(email);
-		account.setBank(bank);
-		
+		account.setBank(bank);	
+
 		AccountDto bankSearch = as.bankSearch(account);
 		
 		int bankMoney = bankSearch.getMoney();
-		
-		out.print(bankMoney);
-		
-		System.out.println(bankMoney);
-		
-		return null;
-	}
-	
-	@RequestMapping(value="myWishMoney", method=RequestMethod.GET)
-	public String myWishMoney(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
-		rep.setContentType("text/html; charset=utf-8");
-		PrintWriter out = rep.getWriter();
-		
-		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
 		
 		MyWishDto wishInfo = ms.wishInfo(wishNo);
 		
 		int wishMoney = wishInfo.getPrice();
 		
-		out.print(wishMoney);
+		int result = 0;
 		
-		System.out.println(wishMoney);
+		if(bankMoney >= wishMoney){
+			result = 1;
+		}
+		
+		out.print(result);
+				
+		return null;
+	}
+	
+	@RequestMapping(value="wishBuy", method=RequestMethod.GET)
+	public String wishBuy(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		
+		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
+		String bank = req.getParameter("bank");
+		
+		session = req.getSession();		
+		String email = session.getAttribute("email").toString();
+		
+		AccountDto account = new AccountDto();
+		
+		account.setEmail(email);
+		account.setBank(bank);	
+
+		AccountDto bankSearch = as.bankSearch(account);
+		
+		int bankMoney = bankSearch.getMoney();
+		
+		MyWishDto wishInfo = ms.wishInfo(wishNo);
+		
+		int wishMoney = wishInfo.getPrice();
+		
+		int buyResult = bankMoney - wishMoney; 
+		
+		account.setMoney(buyResult);
+		
+		as.bankBuyUpdate(account);
+		
+		MyWishDto mywish = new MyWishDto();
+		
+		mywish.setWishNo(wishNo);
+		mywish.setSuccess(1);
+		
+		ms.myWishUpdate(mywish);
+		
+		return null;
+	}
+	
+	@RequestMapping(value="passChk", method=RequestMethod.GET)
+	public String passChk(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		
+		String bank = req.getParameter("bank");
+		String password = req.getParameter("password");
+		
+		session = req.getSession();		
+		String email = session.getAttribute("email").toString();
+		
+		AccountDto account = new AccountDto();
+		
+		account.setEmail(email);
+		account.setBank(bank);	
+		account.setPassword(password);	
+		
+		
+		int passwordChk = as.passwordChk(account);
+		
+		out.print(passwordChk);
 		
 		return null;
 	}

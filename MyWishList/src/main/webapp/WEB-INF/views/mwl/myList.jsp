@@ -37,7 +37,11 @@
 		<div id="chart" style="display: none;">
 			<div id="wishChart" style="min-width: 310px; height: 400px; width:500px; margin: 0 auto"></div>
 		</div>
-		<input type="button" id="buyBtn" value="구입">
+		<input type="button" id="buyBtn" style="display: none;" value="구입">
+		<div id="buyDiv" style="display: none;">
+			<input type="password" id="password" placeholder="암호">
+			<input type="button" id="buy" value="구입하기">
+		</div>
 		<div id="pageForm">
 			<c:if test="${pg.startPage > pg.pageBlock }">
 				<a href="myList.html?currentPage=${pg.startPage-pg.pageBlock }">[이전]</a>
@@ -59,9 +63,9 @@
 			<span>품명</span><input type="text" name="product" id="product" class="input"><br>
 			<span>금액</span><input type="text" name="price" id="price" class="input"><br>
 			<span>기한</span><input type="date" name="remainDate" id="remainDate" class="input"><br>
-			<span>이미지</span><input type="file" name="img" id="img" class="input"><br>
+			<span>이미지</span><span id='imgSpan'><input type="hidden" id="img" name="img"></span><br>
 			<span>성공여부</span><input type="text" name="success" id="success" class="input"><br>
-			<input type="hidden" name="wishNo" id="wishNo">
+			<input type="text" name="wishNo" id="wishNo" class="input">
 			<input type="submit" value="입력">
 			<input type="button" value="취소">
 		</form> 

@@ -89,11 +89,11 @@ public class MyWishDto {
 		this.end = end;
 	}
 	
-	
 	@Override
 	public String toString() {
-		return "MyWishDto [email=" + email + ", product=" + product + ", price=" + price + ", remainDate="
-				+ remainDate + ", success=" + success + ", img=" + img + "]";
+		return "MyWishDto [wishNo=" + wishNo + ", email=" + email + ", product=" + product + ", price="
+				+ price + ", remainDate=" + remainDate + ", success=" + success + ", img=" + img
+				+ ", pageNum=" + pageNum + ", start=" + start + ", end=" + end + "]";
 	}
 
 	

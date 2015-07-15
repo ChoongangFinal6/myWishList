@@ -26,8 +26,15 @@ public class AccountServiceImpl implements AccountService{
 		return aDao.bankList(email);
 	}
 
-	@Override
 	public AccountDto bankSearch(AccountDto account) {
 		return aDao.bankSearch(account);
+	}
+
+	public int bankBuyUpdate(AccountDto accountDto) {
+		return aDao.bankBuyUpdate(accountDto);
+	}
+
+	public int passwordChk(AccountDto accountDto) {
+		return aDao.passwordChk(accountDto);
 	}
 }

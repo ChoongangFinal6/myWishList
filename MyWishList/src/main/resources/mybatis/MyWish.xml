@@ -12,6 +12,7 @@
 		<result property="success" column="success" />
 		<result property="img" column="img" />
 	</resultMap>
+	
 	<select id="total" parameterType="String" resultType="int">
  	 	select count(*) from MyWish where email=#{email}
   	</select>
@@ -21,21 +22,25 @@
   	</select>
 	
 	<select id="myWishList" parameterType="MyWish" resultMap="MyWishResult">
-		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} order by wishNo) a) where rn between #{start} and #{end}
+		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} and success=0 order by wishNo) a) where rn between #{start} and #{end}
 	</select>
 	
 	<select id="selectItem" parameterType="MyWish" resultType="MyWish">
 		select * from MyWish where wishNo = #{wishNo, jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
 	</select>
+	
 	<select id="isIn" parameterType="MyWish" resultType="integer">
 		select count(wishNo) from MyWish where wishNo = #{wishNo, jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
 	</select>
+	
 	<delete id="delete" parameterType="MyWish">
 		delete from MyWish where wishNo = #{wishNo, jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
 	</delete>
+	
 	<update id="updateMyWish" parameterType="MyWish">
 		update MyWish set product = #{product}, price = #{price}, remainDate = #{remainDate}, img = #{img} where wishNo = ${wishNo}
 	</update>
+	
 	<insert id="insertMyWish" parameterType="MyWish">
 	  	<selectKey order="BEFORE" keyProperty="wishNo" resultType="int">
 	  		select nvl(max(wishNo),0)+1 id from MyWish
@@ -43,5 +48,10 @@
 	    insert into MyWish values(
 	    #{wishNo}, #{email}, #{product}, #{price}, #{remainDate}, 0, #{img, jdbcType=VARCHAR})
   	</insert>
+  	
+  	<update id="myWishUpdate" parameterType="MyWish">
+  		update MyWish set success=#{success} where wishNo=#{wishNo}
+  	</update>
+  	
 	<!-- Select with no parameters using the result map for Account class. -->
 </mapper>

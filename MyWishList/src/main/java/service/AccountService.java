@@ -9,4 +9,6 @@ public interface AccountService {
 	public int searchAccount(String account);
 	public List<AccountDto> bankList(String email);
 	public AccountDto bankSearch(AccountDto account);
+	public int bankBuyUpdate(AccountDto accountDto);
+	public int passwordChk(AccountDto accountDto);
 }
