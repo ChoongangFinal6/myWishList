@@ -101,7 +101,7 @@ $(function() {
 	$('.buttons').on('click', function(e) {
 		e.stopImmediatePropagation();
 	});
-	$('.wishDiv').bind('click', function() {
+	$('.wishDiv').on('click', function() {
 		var sendData = $(this).find($('.wishNo')).val();
 		var params = "wishNo=" + sendData;
 		$('#bankSelect').prop('value', 'All');
