@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import upload.FileUpload;
 import service.AccountService;
 import service.MyWishService;
 import service.Paging;
+import upload.FileUpload;
 
 @Controller
 public class MWLController {
@@ -52,13 +52,16 @@ public class MWLController {
 		List<MyWishDto> myWishList = ms.wishList(myWishDto);
 		
 		List<AccountDto> bankList = as.bankList(email);
-		
+		List<AccountDto> aList = as.getAccountList(email);
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
+		model.addAttribute("aList", aList);
 		model.addAttribute("pg",pg);
+		
 		
 		return "mwl/myList";
 	}
+	
 	
 	/*
 	@RequestMapping(value = "myListChange")
@@ -369,6 +372,45 @@ public class MWLController {
 	public void sucessFail(){
 		System.out.println("5초마다 나온다.");
 	}
+	
+	
+	// 계좌 관리 창 호출
+	@RequestMapping(value = "manageAccount")
+	public String manageAccount(HttpSession session, Model model){
+		System.out.println("CTRL:mwl/manageAccount");
+		String email = session.getAttribute("email").toString();
+		List<AccountDto> aList = as.getAccountList(email);
+		model.addAttribute("aList", aList);
+		return "bank/manageAccount";
+	}
+	
+	// 새 계좌 등록
+	@RequestMapping(value= "addNewAccount")
+	public String addNewAccount(@ModelAttribute AccountDto account, Model model){
+		System.out.print("CTRL:mwl/addNewAccount: " + account);
+		int result = as.addNewAccount(account);
+		System.out.println("result:"+result);
+		model.addAttribute("result", result);
+		return "forward:manageAccount.html";
+	}
+
+	// 잔고 변경
+	@RequestMapping(value="editBalance")
+	public String editBalance(@ModelAttribute AccountDto account, Model model){
+		System.out.println("CTRL:mwl/editBalance");
+		int result = as.editBalance(account);
+		return "forward:manageAccount.html";
+	}
+	
+	// 계좌 삭제
+	@RequestMapping(value="deleteAccount")
+	public String deleteAccount(HttpSession session, Model model, String account){
+		System.out.println("CTRL:mwl/deleteAccount: " + account);
+		int result = as.deleteAccount(account);
+		model.addAttribute("result", result);
+		return "forward:manageAccount.html";
+	}
+	
 }
 
 //rep.setContentType("text/html; charset=utf-8");

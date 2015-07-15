@@ -13,8 +13,7 @@ ALTER TABLE Account
 -- MyWish
 DROP TABLE MyWish;
 
--- Account
-DROP TABLE Account;
+
 
 -- MyWish
 CREATE TABLE MyWish (
@@ -47,12 +46,14 @@ insert into myWish values(15, 'ch@gmail.com', '스노우보드2', 95000, '2015-0
 
 select * from mywish;
 
-select * from account;
-
-delete ACCOUNT;
 
 
 -- Account
+
+DROP TABLE Account;
+delete ACCOUNT;
+select * from account;
+
 CREATE TABLE Account (
 	account	 VARCHAR2(30) PRIMARY KEY,  -- 계좌번호
 	email  	 VARCHAR2(50) NOT NULL, -- 아이디(이메일)
@@ -60,7 +61,6 @@ CREATE TABLE Account (
 	bank   	 VARCHAR2(20) NOT NULL, -- 은행명
 	money  	 INTEGER      NULL      -- 잔고
 );
-
 insert into Account values('130-331-358612', 'ch@gmail.com', '123', '농협', 100000);
 insert into Account values('140-125-648532', 'ch@gmail.com', '123', '신협', 50000);
 insert into Account values('110-835-872496', 'ch@gmail.com', '123', '신한', 7000);
