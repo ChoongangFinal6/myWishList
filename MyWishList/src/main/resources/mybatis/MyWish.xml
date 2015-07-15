@@ -16,6 +16,12 @@
 	<select id="total" parameterType="String" resultType="int">
  	 	select count(*) from MyWish where email=#{email} and success=0
   	</select>
+	<select id="sucTotal" parameterType="String" resultType="int">
+ 	 	select count(*) from MyWish where email=#{email} and success=1
+  	</select>
+	<select id="failTotal" parameterType="String" resultType="int">
+ 	 	select count(*) from MyWish where email=#{email} and success=2
+  	</select>
   	
 	<select id="wishInfo" parameterType="int" resultType="MyWish">
  	 	select * from MyWish where wishNo=#{wishNo}
@@ -23,6 +29,14 @@
 	
 	<select id="myWishList" parameterType="MyWish" resultMap="MyWishResult">
 		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} and success=0 order by wishNo) a) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="sucWishList" parameterType="MyWish" resultMap="MyWishResult">
+		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} and success=1 order by wishNo) a) where rn between #{start} and #{end}
+	</select>
+	
+	<select id="failWishList" parameterType="MyWish" resultMap="MyWishResult">
+		select * from (select rownum rn, a.* from (select * from MyWish where email=#{email} and success=2 order by wishNo) a) where rn between #{start} and #{end}
 	</select>
 	
 	<select id="selectItem" parameterType="MyWish" resultType="MyWish">
@@ -38,7 +52,7 @@
 	</delete>
 	
 	<update id="updateMyWish" parameterType="MyWish">
-		update MyWish set product = #{product}, price = #{price}, remainDate = #{remainDate}, img = #{img} where wishNo = ${wishNo}
+		update MyWish set product = #{product}, price = #{price}, remainDate = #{remainDate}, img = #{img, jdbcType=VARCHAR} where wishNo = ${wishNo}
 	</update>
 	
 	<insert id="insertMyWish" parameterType="MyWish">
@@ -51,6 +65,14 @@
   	
   	<update id="myWishUpdate" parameterType="MyWish">
   		update MyWish set success=#{success} where wishNo=#{wishNo}
+  	</update>
+  	
+  	<select id="myWishAllList" resultMap="MyWishResult">
+  		select * from MyWish where success=0
+  	</select>
+  	
+  	<update id="myWishFail" parameterType="int">
+  		update MyWish set success=2 where wishNo=#{wishNo}
   	</update>
   	
 	<!-- Select with no parameters using the result map for Account class. -->

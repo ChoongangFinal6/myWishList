@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:include page="myWishChart.jsp"></jsp:include>
+
 </body>
 </html>

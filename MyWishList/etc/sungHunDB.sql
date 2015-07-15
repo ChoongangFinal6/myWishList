@@ -13,7 +13,7 @@ ALTER TABLE Account
 -- MyWish
 DROP TABLE MyWish;
 
-
+select * from MyWish where success=0;
 
 -- MyWish
 CREATE TABLE MyWish (
