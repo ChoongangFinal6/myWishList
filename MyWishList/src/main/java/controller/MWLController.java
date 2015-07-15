@@ -367,13 +367,13 @@ public class MWLController {
 		
 		return null;
 	}
-	
+/*	
 	@Scheduled(fixedRate=5000)
 	public void sucessFail(){
 		System.out.println("5초마다 나온다.");
 	}
 	
-	
+*/	
 	// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
 	public String manageAccount(HttpSession session, Model model){
@@ -389,7 +389,6 @@ public class MWLController {
 	public String addNewAccount(@ModelAttribute AccountDto account, Model model){
 		System.out.print("CTRL:mwl/addNewAccount: " + account);
 		int result = as.addNewAccount(account);
-		System.out.println("result:"+result);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
 	}
@@ -397,8 +396,10 @@ public class MWLController {
 	// 잔고 변경
 	@RequestMapping(value="editBalance")
 	public String editBalance(@ModelAttribute AccountDto account, Model model){
-		System.out.println("CTRL:mwl/editBalance");
+		System.out.print("CTRL:mwl/editBalance");
 		int result = as.editBalance(account);
+		System.out.println("_____"+ result);
+		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
 	}
 	

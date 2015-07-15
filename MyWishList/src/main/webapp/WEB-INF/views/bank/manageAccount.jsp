@@ -29,15 +29,34 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-		var result = "${result}";
-		if( result == 1 ){
+		var result = ${result};
+		switch (result){
+		case 511 :
 			showMsg("<div class='fadeMsg'>새로운 계좌가 등록되었습니다</div>");		
-		}else if( result == -1 ){
-			showMsg("<div class='fadeMsg'>이미 등록되어있는  계좌입니다</div>");
-		}else if( result == 2){
+			break;
+		case 512 :
+			showMsg("<div class='fadeMsg' style='background-color:#c74467'>이미 등록되어있는  계좌입니다</div>");
+			break;
+		case 513 :
+			showMsg("<div class='fadeMsg' style='background-color:#c74467'>계좌등록에 실패하였습니다</div>");
+			break;
+		case 521 :
 			showMsg("<div class='fadeMsg'>계좌 정보가 삭제되었습니다</div>");
-		}else if( result == 3){ 
-			showMsg("<div class='fadeMsg'>계좌 정보가 삭제되지 않았습니다</div>");
+			break;
+		case 522 :
+			showMsg("<div class='fadeMsg' style='background-color:#c74467'>계좌 정보 삭제에 실패하였습니다</div>");
+			break;
+		case 531 :
+			showMsg("<div class='fadeMsg'>계좌의 잔고가 변경되었습니다.</div>");
+			break;
+		case 532 :
+			showMsg("<div class='fadeMsg' style='background-color:#c74467'>현재 잔고보다 많은 금액을 차감할 수 없습니다</div>");
+			break;
+		case 533 :
+			showMsg("<div class='fadeMsg' style='background-color:#c74467'>계좌의 잔고 변경에 실패하였습니다</div>");
+			break;
+		default :
+			break;
 		}
 	});
 
