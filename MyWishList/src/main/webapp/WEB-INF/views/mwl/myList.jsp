@@ -10,27 +10,34 @@
 		loadAccountList();		
 	});
 
+	// 계좌 관리 팝업창
 	function manageAccount(){
 		var win = window.open("manageAccount.html", "계좌관리", "width=500, height=400,resizable=false");
 	}
 	
+	// 계좌 목록 Load
 	function loadAccountList(){
 		$.ajax({
 			url: "loadAccountList.html",
-			async : true,
 			success : function(result) {
 				$('#mwl_acc_list').html(result);
 			}
 		});
 	}
 	
+	function accountDetail(){
+		$('#accounDetail').toggle('1000');
+	}
+	
 </script>
 </head>
-<body onload="loadAccountList()">
+<body>
+<!-- 계좌목록 -->
 	<div id="mwl_account">
-		계좌정보<button onclick="manageAccount()">관리</button>
+		계좌정보<button onclick="accountDetail()">상세</button><button onclick="manageAccount()">관리</button>
 		<div id="mwl_acc_list"></div>
 	</div>
+<!-- WishList -->	
 	<div id="wishList">
 		<c:forEach var="wishlist" items="${myWishList}">
 			<div class="wishDiv" style="width: 250px; height: 200px; float: left;">
@@ -46,9 +53,7 @@
 		</c:forEach>
 	</div>
 	<div style="width: 800px;">
-		<input type="button" id="createBank" value="은행등록">
-		<div id="bankCreForm"></div>
-		<br>
+<!-- Chart -->
 		<select id="bankSelect" style="display: none;">
 			<option value="All">전체</option>
 			<c:forEach var="opt" items="${bankList }">

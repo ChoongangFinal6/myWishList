@@ -366,17 +366,17 @@ public class MWLController {
 		return null;
 	}
 	
-	@Scheduled(fixedRate=5000)
+/*	@Scheduled(fixedRate=5000)
 	public void sucessFail(){
 		System.out.println("5초마다 나온다.");
 		
-	}
+	}*/
 	
 	
 	// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
 	public String manageAccount(HttpSession session, Model model){
-		System.out.println("CTRL:mwl/manageAccount");
+		//System.out.println("CTRL:mwl/manageAccount");
 		String email = session.getAttribute("email").toString();
 		List<AccountDto> aList = as.getAccountList(email);
 		model.addAttribute("aList", aList);
@@ -386,7 +386,7 @@ public class MWLController {
 	// 계좌 목록 조회 (ajax)
 	@RequestMapping(value="loadAccountList")
 	public String accountList(HttpSession session, Model model){
-		System.out.println("CTRL:mwl/loadAccountList");
+		//System.out.println("CTRL:mwl/loadAccountList");
 		String email = session.getAttribute("email").toString();
 		List<AccountDto> aList = as.getAccountList(email);
 		model.addAttribute("aList", aList);
@@ -396,7 +396,7 @@ public class MWLController {
 	// 새 계좌 등록
 	@RequestMapping(value= "addNewAccount")
 	public String addNewAccount(@ModelAttribute AccountDto account, Model model){
-		System.out.print("CTRL:mwl/addNewAccount: " + account);
+		//System.out.print("CTRL:mwl/addNewAccount: " + account);
 		int result = as.addNewAccount(account);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
@@ -405,7 +405,7 @@ public class MWLController {
 	// 잔고 변경
 	@RequestMapping(value="editBalance")
 	public String editBalance(@ModelAttribute AccountDto account, Model model){
-		System.out.println("CTRL:mwl/editBalance");
+		//System.out.println("CTRL:mwl/editBalance");
 		int result = as.editBalance(account);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
@@ -414,7 +414,7 @@ public class MWLController {
 	// 계좌 삭제
 	@RequestMapping(value="deleteAccount")
 	public String deleteAccount(HttpSession session, Model model, String account){
-		System.out.println("CTRL:mwl/deleteAccount: " + account);
+		//System.out.println("CTRL:mwl/deleteAccount: " + account);
 		int result = as.deleteAccount(account);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";

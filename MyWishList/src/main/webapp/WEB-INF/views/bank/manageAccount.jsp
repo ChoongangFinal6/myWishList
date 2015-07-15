@@ -67,7 +67,7 @@
 	function showMsg(msg){
 		$('body').append(msg);
 		$('.fadeMsg').fadeIn();
-		setTimeout(function(){ $('.fadeMsg').fadeOut();	}, 2000);
+		setTimeout(function(){ $('.fadeMsg').fadeOut();	}, 1500);
 	}
 	
 	
