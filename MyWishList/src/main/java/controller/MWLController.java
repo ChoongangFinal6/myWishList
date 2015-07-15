@@ -12,6 +12,7 @@ import model.AccountDto;
 import model.MyWishDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -362,6 +363,11 @@ public class MWLController {
 		out.print(passwordChk);
 		
 		return null;
+	}
+	
+	@Scheduled(fixedRate=5000)
+	public void sucessFail(){
+		System.out.println("5초마다 나온다.");
 	}
 }
 
