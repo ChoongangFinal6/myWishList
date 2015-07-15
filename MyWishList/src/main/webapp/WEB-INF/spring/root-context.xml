@@ -27,10 +27,5 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
-	<!-- 스케쥴 적용하는 부분 -->
-	<!-- <bean id="RemainDateChk" class="controller.RemainDateChk" />
-	<task:scheduler id="gsScheduler" pool-size="10" />
-	<task:executor id="gsTaskExecutor" pool-size="10" />
-	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" /> -->
 	
 </beans>

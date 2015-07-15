@@ -17,7 +17,9 @@ public class RemainDateChk {
 	@Autowired
 	MyWishService ms;
 	
+	// 매일 0시에 실행하도록 설정
 	@Scheduled(cron="0 00 00 * * ?") 
+	//@Scheduled(cron="*/5 * * * * *") -- 테스트용 
 	public void scheduleRun() throws Exception{
 		List<MyWishDto> myWishAllList = ms.myWishAllList();
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
