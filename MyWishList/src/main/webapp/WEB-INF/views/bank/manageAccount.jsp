@@ -86,14 +86,14 @@
 				<form action="#">
 					<input type="hidden" name="email" value="${sessionScope.email}">
 					<input type="hidden" name="account" value="${acc.account}">
-					<input type="number" name="money" id="money">
+					<input type="text" name="money" id="money" >
 					<button class="moneyEdit" id="incr">+</button>
 					<button class="moneyEdit" id="decr">-</button>
 					<!-- <button onclick="editBalance()">입출금</button> -->
 				</form>
 			</td>
 			<td>
-			 	<button onclick="deleteConfirm('${acc.bank}',${acc.account})">X</button>
+			 	<button onclick="deleteConfirm('${acc.bank}','${acc.account}')">X</button>
 			</td>
 		</tr>
 	</c:forEach>
