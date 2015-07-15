@@ -63,7 +63,7 @@
 							<span onclick="modify(${wishlist.wishNo })" class="buttonSpan"><a href='#writeDiv' class='openPopup'>수정</a></span>
 							<span onclick="del(${wishlist.wishNo })" class="buttonSpan">삭제</span>
 						</div>
-						<div class="priceDiv overDiv">금&nbsp;&nbsp;액 : <fmt:formatNumber pattern="#,###" value="${wishlist.price }"></fmt:formatNumber> 원</div>
+						<div class="priceDiv overDiv">금&nbsp;&nbsp;액 : <fmt:formatNumber pattern="#,###" value="${wishlist.price }"></fmt:formatNumber>원</div>
 						<div class="remainDateDiv overDiv">종료일 : <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd"/> 까지</div>
 						<input type="hidden" name="wishNo" class="wishNo" value="${wishlist.wishNo }">
 					</div>
@@ -76,7 +76,7 @@
 				</li>
 			</c:if>
 		</ul>
-		<div><a href='#writeDiv' class='openPopup newA newAText' onclick="newItem()">물건 추가</a></div>
+		<div id="newADiv"><a href='#writeDiv' class='openPopup newA newAText' onclick="newItem()">물건 추가</a></div>
 	</div>
 	<div id="pageForm">
 		<ul id="pageUl" class="pageUl">
@@ -120,15 +120,42 @@
 
 	<div id="writeDiv" class="mfp-hide">
 		<form action="myWishWrite.html" method="POST" enctype="multipart/form-data" name="myWishDto">
-			<span>품명</span><input type="text" name="product" id="product" class="input"><br>
-			<span>금액</span><input type="text" name="price" id="price" class="input"><br>
-			<span>기한</span><input type="date" name="remainDate" id="remainDate" class="input"><br>
-			<span>이미지</span>
-			<span id='imgSpan'><input type="file" name="image" id="imageInput"><input type="hidden" name="img" id="imgInput"></span><br>
-			<span>성공여부</span><input type="text" name="success" id="success" class="input"><br>
+			<table id="writeTable">
+				<tr>
+					<th>품명</th>
+				<td>
+					<input type="text" name="product" id="product" class="input" >
+				</td>
+				</tr>
+				<tr>
+					<th>금액</th>
+					<td>
+						<input type="text" name="price" id="price" class="input">
+					</td>
+				</tr>
+				<tr>
+				<th>기한</th>
+					<td>
+						<input type="date" name="remainDate" id="remainDate" class="input">
+					</td>
+				</tr>
+				<tr>
+					<th>이미지</th>
+					<td>
+						<span id='imgSpan'>
+							<input type="file" name="image" id="imageInput" class="input">
+							<input type="hidden" name="img" id="imgInput">
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="입력">
+						<input type="button" value="취소">
+					</td>
+				</tr>
+			</table>
 			<input type="hidden" name="wishNo" id="wishNo" class="input">
-			<input type="submit" value="입력">
-			<input type="button" value="취소">
 		</form> 
 	</div>
 </body>

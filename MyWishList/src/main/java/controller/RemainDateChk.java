@@ -43,6 +43,6 @@ public class RemainDateChk {
 			if(dateGap <= 0){
 				ms.myWishFail(myWishAllList.get(i).getWishNo());
 			}
-		} 
+		}
 	}
 }
