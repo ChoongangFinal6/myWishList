@@ -38,7 +38,7 @@
 	</delete>
 	
 	<update id="updateMyWish" parameterType="MyWish">
-		update MyWish set product = #{product}, price = #{price}, remainDate = #{remainDate}, img = #{img} where wishNo = ${wishNo}
+		update MyWish set product = #{product}, price = #{price}, remainDate = #{remainDate}, img = #{img, jdbcType=VARCHAR} where wishNo = ${wishNo}
 	</update>
 	
 	<insert id="insertMyWish" parameterType="MyWish">

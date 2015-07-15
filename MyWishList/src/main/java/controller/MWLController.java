@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import upload.FileUpload;
 import service.AccountService;
 import service.MyWishService;
 import service.Paging;
+import upload.FileUpload;
 
 @Controller
 public class MWLController {
@@ -55,6 +56,7 @@ public class MWLController {
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
 		model.addAttribute("pg",pg);
+		model.addAttribute("path","/mwl/image/");
 		
 		return "mwl/myList";
 	}
@@ -110,16 +112,19 @@ public class MWLController {
 		int result = 0;
 		session = req.getSession();
 		String email = session.getAttribute("email").toString();
-		MultipartFile file = (MultipartFile) multipartRequest.getFile("img");
-		System.out.println(file);
+		MultipartFile file = (MultipartFile) multipartRequest.getFile("image");
 		if (file != null) {
+			String fileName = file.getOriginalFilename();
+			String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+			Calendar cal = Calendar.getInstance();
+			String replaceName = cal.getTimeInMillis() + fileType;
 			String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
-			FileUpload.fileUpload(file, path);
-			myWishDto.setImg(file.getOriginalFilename());
+				//	C:\spring\SpringSrc\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyWishList\image
+			FileUpload.fileUpload(file, path, replaceName);
+			myWishDto.setImg(replaceName);
 		}
 		myWishDto.setEmail(email);
 //		myWishDto.setRemainDate(remainDate);
-		System.out.println("입력때 : "+myWishDto.toString());
 		result = ms.write(myWishDto);
 		if (result == 0) System.out.println("에러");
 		return "redirect:myList.html";
@@ -133,7 +138,6 @@ public class MWLController {
 		MyWishDto myWish = ms.selectItem(email, wishNo);
 		myWish.setRemainDate(myWish.getRemainDate().substring(0, 10));
 		result = "{\"wishNo\":\""+myWish.getWishNo()+"\",\"product\":\""+myWish.getProduct()+"\",\"price\":\""+myWish.getPrice()+"\",\"remainDate\":\""+myWish.getRemainDate()+"\",\"success\":\""+myWish.getSuccess()+"\",\"img\":\""+myWish.getImg()+"\"}";
-		System.out.println(result);
 		rep.setContentType("text/html; charset=utf-8");
 		PrintWriter out = rep.getWriter();
 		out.print(result);

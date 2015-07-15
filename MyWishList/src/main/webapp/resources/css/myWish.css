@@ -1,4 +1,136 @@
 @CHARSET "UTF-8";
-#writeDiv {
+
+#wishList {
 	
+}
+.openPopup {
+	text-decoration: none;
+	color: black;
+}
+.wishUl {
+	width: 1100px;
+	list-style-type: none;
+	margin: 0px auto;
+	display: inline-table;
+}
+
+.wishLi {
+	display: block;
+	float: left;
+	padding: 20px;
+}
+
+.wishDiv {
+	width: 250px;
+	overflow: hidden;
+	height: 200px;
+	border: 2px solid black;
+	border-radius: 20px;
+	margin: 0px;
+}
+
+.productSpan {
+	font-family: "고딕체";
+	font-weight: bolder;
+	font-size: 1.3em;
+}
+
+.newDiv {
+	width: 250px;
+	height: 200px;
+	margin: 0px;
+	border-radius: 20px;
+	border: 2px dotted black;
+	font-weight: 900;
+	font-size: 3em;
+	vertical-align: center;
+}
+
+.newDiv:hover {
+	background-color: #d9d9d9;
+}
+
+.overDiv {
+	background-color: #rgba(255, 255, 255, 0.7);
+}
+
+.imgDiv {
+	overflow: hidden;
+	width: 250px;
+	text-align:center;
+	height: 145px;
+}
+
+.imgDiv img {
+	height : 100%;
+/* 	min-width : 80%;
+	min-height: 80%;
+	max-width : 80%;
+	max-height: 80%; */
+	
+}
+
+.priceDiv, .remainDateDiv {
+	position: relative;
+	height: 28px;
+	width: 250px;
+	top: -30px;
+	text-align: center;
+	vertical-align: center;
+	font-size: 1.2em;
+}
+
+.remainDateDiv {
+	
+}
+
+.priceDiv {
+	
+}
+
+.buttons {
+	position: relative;
+	top: -30px;
+	height: 30px;
+	width: 250px;
+	background-color: rgba(0, 0, 0, 0.4);
+	opacity: 0;
+	display : inline-table;
+	text-align: center;
+}
+
+.buttons:hover {
+	opacity: 1;
+}
+.buttonSpan {
+	display: table-cell;
+	width: 120px;
+	font-weight: bolder;
+	color: black;
+	font-size:1.2em;
+/* 	text-shadow : -1.5px 0 #ffffff, 0 1.5px #ffffff, 1.5px 0 #ffffff, 0 -1.5px #ffffff; */
+	text-shadow: 0px 0px 4px #ffffff, 0px 0px 4px #ffffff, 0px 0px 4px #ffffff;
+	
+	cursor: pointer;
+}
+#writeDiv {
+	border: 2px solid blue;
+	line-height: 35px;
+	max-width: 400px;
+	width: auto;
+	height: auto;
+	position: relative;
+	background: #FFF;
+	margin : 20px auto;
+	padding: 20px;
+	border-radius : 15px;
+}
+.newA {
+	width: 100%;
+	height: 100%;
+}
+.newAText {
+	font-size: 1.2em;
+	font-weight: bolder;
+	border : 2px solid black;
 }

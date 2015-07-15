@@ -10,7 +10,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUpload {
-	public static void fileUpload(MultipartFile fileData, String path) throws IOException {
+	public static void fileUpload(MultipartFile fileData, String path, String replaceName) throws IOException {
 		String originalFileName = fileData.getOriginalFilename();
 		String contentType = fileData.getContentType();
 		long fileSize = fileData.getSize();
@@ -23,7 +23,7 @@ public class FileUpload {
 				if (!realUploadDir.exists()) { // 경로에 폴더가 존재하지 않으면 생성합니다.
 					realUploadDir.mkdirs();
 				}
-				out = new FileOutputStream(path + "/" + originalFileName);
+				out = new FileOutputStream(path + "/" + replaceName);
 				FileCopyUtils.copy(is, out); // InputStream에서 온 파일을
 												// outputStream으로 복사
 			} else {

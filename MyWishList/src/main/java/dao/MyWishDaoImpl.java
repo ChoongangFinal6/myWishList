@@ -26,7 +26,6 @@ public class MyWishDaoImpl implements MyWishDao {
 	@Override
 	public int write(MyWishDto myWishDto) {
 		int isIn = session.selectOne("MyWish.isIn", myWishDto);
-		System.out.println("isIn"+isIn);
 		int result = 0;
 		if (isIn >= 1) {
 			result = session.update("MyWish.updateMyWish", myWishDto);
