@@ -58,28 +58,6 @@ public class MWLController {
 		List<AccountDto> aList = as.getAccountList(email);
 		
 		
-		// 페이지에 들어올 때 실패한 위시리스트 적용
-		List<MyWishDto> myWishAllList = ms.myWishAllList();
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String remainDate = "";
-		Date endDate = null;
-		Date date = new Date();
-		long dateGapLong;
-		int dateGap;
-		// 현재의 날짜와 시간을 getTime으로 가지고 와서 뒤의 시간을 00:00:00으로 바꾸는 로직
-		long today = (date.getTime()/(1000*60*60*24))*(1000*60*60*24)-(1000*60*60*9);
-		
-		for (int i = 0; i < myWishAllList.size(); i++) {
-			remainDate = myWishAllList.get(i).getRemainDate();
-			endDate = transFormat.parse(remainDate);	
-			dateGapLong = (endDate.getTime() - today);
-			dateGap = ((int)(dateGapLong/(1000*60*60*24)));
-			
-			if(dateGap <= 0){
-				ms.myWishFail(myWishAllList.get(i).getWishNo());
-			}
-		}
-		
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
 		model.addAttribute("pg",pg);
@@ -87,6 +65,45 @@ public class MWLController {
 		
 		
 		return "mwl/myList";
+	}
+	
+	
+	
+	@RequestMapping(value = "mySucFailList")
+	public String mySucFailList(HttpServletRequest req, String currentPage, Model model) throws ParseException, InterruptedException {
+		session = req.getSession();
+		session.setAttribute("email", "ch@gmail.com");
+		String email = session.getAttribute("email").toString();
+		int total = 0;
+		String view = req.getParameter("view");
+		if(view.equals("success")){
+			total = ms.sucTotal(email);
+			
+		}else if(view.equals("fail")){
+			total = ms.failTotal(email);			
+		}
+		Paging pg = new Paging(total, currentPage);
+		MyWishDto myWishDto = new MyWishDto();
+		
+		myWishDto.setEmail(email);
+		myWishDto.setStart(pg.getStart());
+		myWishDto.setEnd(pg.getEnd());
+		
+		List<MyWishDto> myWishList = null;
+		
+		if(view.equals("success")){
+			myWishList = ms.sucWishList(myWishDto);
+		}else if(view.equals("fail")){
+			myWishList = ms.failWishList(myWishDto);
+		}
+		
+		model.addAttribute("myWishList", myWishList);
+		model.addAttribute("pg",pg);
+		model.addAttribute("view",view);
+		model.addAttribute("path","/mwl/image/");
+		
+		
+		return "mwl/mySucFailList";
 	}
 	
 	
@@ -317,7 +334,7 @@ public class MWLController {
 		
 		account.setEmail(email);
 		account.setAccount(accountNo);	
-System.out.println("AccountDto : "+account);	
+		System.out.println("AccountDto : "+account);	
 		AccountDto bankSearch = as.bankSearch(account);
 		
 		int bankMoney = bankSearch.getMoney();

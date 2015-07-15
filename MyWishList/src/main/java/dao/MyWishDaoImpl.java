@@ -74,4 +74,28 @@ public class MyWishDaoImpl implements MyWishDao {
 		int mywishFail = session.update("myWishFail", wishNo);
 		return mywishFail;
 	}
+
+	// 성공한 리스트 총값
+	public int sucTotal(String email) {
+		int Suctotal = session.selectOne("sucTotal", email);
+		return Suctotal;
+	}
+
+	// 실패한 리스트 총값
+	public int failTotal(String email) {
+		int Failtotal = session.selectOne("failTotal", email);
+		return Failtotal;
+	}
+
+	@Override
+	public List<MyWishDto> sucWishList(MyWishDto myWishDto) {
+		List<MyWishDto> sucwishList = session.selectList("sucWishList", myWishDto);
+		return sucwishList;
+	}
+
+	@Override
+	public List<MyWishDto> failWishList(MyWishDto myWishDto) {
+		List<MyWishDto> failwishList = session.selectList("failWishList", myWishDto);
+		return failwishList;
+	}
 }

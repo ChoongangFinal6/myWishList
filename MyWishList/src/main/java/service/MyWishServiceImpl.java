@@ -60,6 +60,24 @@ public class MyWishServiceImpl implements MyWishService {
 	public int myWishFail(int wishNo) {
 		return mw.myWishFail(wishNo);
 	}
-	
-	
+
+	@Override
+	public int sucTotal(String email) {
+		return mw.sucTotal(email);
+	}
+
+	@Override
+	public int failTotal(String email) {
+		return mw.failTotal(email);
+	}
+
+	@Override
+	public List<MyWishDto> sucWishList(MyWishDto myWishDto) {
+		return mw.sucWishList(myWishDto);
+	}
+
+	@Override
+	public List<MyWishDto> failWishList(MyWishDto myWishDto) {
+		return mw.failWishList(myWishDto);
+	}
 }
