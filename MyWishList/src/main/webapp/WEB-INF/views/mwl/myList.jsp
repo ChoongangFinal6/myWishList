@@ -36,8 +36,12 @@
 </script>
 </head>
 <body id="myWishBody">
-<input type="button" onclick="location.href='mySucFailList.html?view=success'" value="성공">
-<input type="button" onclick="location.href='mySucFailList.html?view=fail'" value="실패">
+<ul id="pageUl" class="pageUl">
+	<li>
+		<a class="myListTopButton" href="mySucFailList.html?view=success">성공</a>
+		<a class="myListTopButton" href="mySucFailList.html?view=fail">실패</a>
+	</li>
+</ul>
 <!-- 계좌목록 -->
 	<div id="mwl_account">
 		계좌정보<button onclick="accountDetail()">상세</button><button onclick="manageAccount()">관리</button>
