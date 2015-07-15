@@ -121,16 +121,15 @@ $(function () {
 		
 		var bankName = "bank=" + bank + "&password=" + password;
 		$.get("passChk.html", bankName, function(data) {
-			result = data;
+			if(data == 1){
+				var sendData = "bank=" + bank + "&wishNo=" + wishNo;
+				$.get("wishBuy.html", sendData, function(data) {
+					alert("구매에 성공하셨습니다");
+					location.href='myList.html';
+				});
+			}else{
+				alert("비밀번호가 틀렸습니다.");
+			}
 		});
-		if(data == 1){
-			var sendData = "bank=" + bank + "&wishNo=" + wishNo;
-			$.get("wishBuy.html", sendData, function(data) {
-				alert("구매에 성공하셨습니다");
-				location.href='myList.html';
-			});
-		}else{
-			alert("비밀번호가 틀렸습니다.");
-		}
 	});
 });
