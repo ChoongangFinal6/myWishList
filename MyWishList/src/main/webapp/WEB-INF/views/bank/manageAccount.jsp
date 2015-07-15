@@ -123,7 +123,6 @@
 					<input type="number" name="money" id="money">
 					<button class="moneyEdit" id="incr">+</button>
 					<button class="moneyEdit" id="decr">-</button>
-					<input type="text" name="money" id="money" >
 					<!-- <button onclick="editBalance()">입출금</button> -->
 				</form>
 			</td>
