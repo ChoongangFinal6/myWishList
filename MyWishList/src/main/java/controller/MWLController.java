@@ -2,17 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-=======
-import java.util.Calendar;
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
-=======
-import java.util.Calendar;
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,8 +54,7 @@ public class MWLController {
 		myWishDto.setEnd(pg.getEnd());
 		List<MyWishDto> myWishList = ms.wishList(myWishDto);
 		List<AccountDto> bankList = as.bankList(email);
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 		List<AccountDto> aList = as.getAccountList(email);
 		
 		
@@ -88,25 +80,12 @@ public class MWLController {
 			}
 		}
 		
-		
-=======
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
-=======
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
-		
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
 		model.addAttribute("pg",pg);
-<<<<<<< HEAD
-<<<<<<< HEAD
-				
-=======
-=======
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		model.addAttribute("path","/mwl/image/");
 		
 		
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		return "mwl/myList";
 	}
 	
@@ -422,31 +401,15 @@ System.out.println("AccountDto : "+account);
 		
 		return null;
 	}
-	
-<<<<<<< HEAD
-<<<<<<< HEAD
-	// 계좌 관리 창 호출
-	@RequestMapping(value = "manageAccount")
-	public String manageAccount(Model model){
-		System.out.println("CTRL:mwl/manageAccount");
-=======
-=======
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 /*	@Scheduled(fixedRate=5000)
 	public void sucessFail(){
 		System.out.println("5초마다 나온다.");
 		
 	}*/
-	
-	
-	// 계좌 관리 창 호출
+		// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
 	public String manageAccount(HttpSession session, Model model){
 		//System.out.println("CTRL:mwl/manageAccount");
-<<<<<<< HEAD
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
-=======
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		String email = session.getAttribute("email").toString();
 		List<AccountDto> aList = as.getAccountList(email);
 		model.addAttribute("aList", aList);
@@ -483,18 +446,8 @@ System.out.println("AccountDto : "+account);
 	
 	// 계좌 삭제
 	@RequestMapping(value="deleteAccount")
-<<<<<<< HEAD
-<<<<<<< HEAD
 	public String deleteAccount(Model model, String account){
 		System.out.println("CTRL:mwl/deleteAccount: " + account);
-=======
-	public String deleteAccount(HttpSession session, Model model, String account){
-		//System.out.println("CTRL:mwl/deleteAccount: " + account);
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
-=======
-	public String deleteAccount(HttpSession session, Model model, String account){
-		//System.out.println("CTRL:mwl/deleteAccount: " + account);
->>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		int result = as.deleteAccount(account);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
