@@ -1,10 +1,14 @@
 package service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import model.MyWishDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import dao.MyWishDao;
@@ -45,5 +49,35 @@ public class MyWishServiceImpl implements MyWishService {
 	@Override
 	public int myWishUpdate(MyWishDto myWishDto) {
 		return mw.myWishUpdate(myWishDto);
+	}
+
+	@Override
+	public List<MyWishDto> myWishAllList() {
+		return mw.myWishAllList();
+	}
+
+	@Override
+	public int myWishFail(int wishNo) {
+		return mw.myWishFail(wishNo);
+	}
+
+	@Override
+	public int sucTotal(String email) {
+		return mw.sucTotal(email);
+	}
+
+	@Override
+	public int failTotal(String email) {
+		return mw.failTotal(email);
+	}
+
+	@Override
+	public List<MyWishDto> sucWishList(MyWishDto myWishDto) {
+		return mw.sucWishList(myWishDto);
+	}
+
+	@Override
+	public List<MyWishDto> failWishList(MyWishDto myWishDto) {
+		return mw.failWishList(myWishDto);
 	}
 }

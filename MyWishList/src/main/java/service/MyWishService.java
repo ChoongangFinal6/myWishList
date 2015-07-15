@@ -12,4 +12,12 @@ public interface MyWishService {
 	public MyWishDto wishInfo(int wishNo);
 	public int delete(String email, int wishNo);
 	public int myWishUpdate(MyWishDto myWishDto);
+	public List<MyWishDto> myWishAllList();
+	public int myWishFail(int wishNo);
+	
+	public int sucTotal(String email);
+	public int failTotal(String email);
+	
+	public List<MyWishDto> sucWishList(MyWishDto myWishDto);
+	public List<MyWishDto> failWishList(MyWishDto myWishDto);
 }

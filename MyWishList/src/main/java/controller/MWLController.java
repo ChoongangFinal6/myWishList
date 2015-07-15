@@ -2,7 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +16,6 @@ import model.AccountDto;
 import model.MyWishDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,8 +39,9 @@ public class MWLController {
 	
 	HttpSession session = null;
 	
+	// 현재 진행중인 리스트 표시
 	@RequestMapping(value = "myList")
-	public String list(HttpServletRequest req, String currentPage, Model model) {
+	public String list(HttpServletRequest req, String currentPage, Model model) throws ParseException, InterruptedException {
 		session = req.getSession();
 		session.setAttribute("email", "ch@gmail.com");
 		String email = session.getAttribute("email").toString();
@@ -52,6 +55,9 @@ public class MWLController {
 		myWishDto.setEnd(pg.getEnd());
 		List<MyWishDto> myWishList = ms.wishList(myWishDto);
 		List<AccountDto> bankList = as.bankList(email);
+
+		List<AccountDto> aList = as.getAccountList(email);
+		
 		
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
@@ -63,52 +69,44 @@ public class MWLController {
 	}
 	
 	
-	/*
-	@RequestMapping(value = "myListChange")
-	public String myListChange(HttpServletRequest req, HttpServletResponse rep, Model model) {
-		
-		String currentPage = req.getParameter("currentPage");
-		
+	// 실패한거나 성공한 리스트 표시
+	@RequestMapping(value = "mySucFailList")
+	public String mySucFailList(HttpServletRequest req, String currentPage, Model model) throws ParseException, InterruptedException {
 		session = req.getSession();
 		session.setAttribute("email", "ch@gmail.com");
 		String email = session.getAttribute("email").toString();
-		
-		int total = ms.total(email);
+		int total = 0;
+		String view = req.getParameter("view");
+		if(view.equals("success")){
+			total = ms.sucTotal(email);
+			
+		}else if(view.equals("fail")){
+			total = ms.failTotal(email);			
+		}
 		Paging pg = new Paging(total, currentPage);
 		MyWishDto myWishDto = new MyWishDto();
 		
 		myWishDto.setEmail(email);
 		myWishDto.setStart(pg.getStart());
 		myWishDto.setEnd(pg.getEnd());
-		List<MyWishDto> myWishList = ms.wishList(myWishDto);
+		
+		List<MyWishDto> myWishList = null;
+		
+		if(view.equals("success")){
+			myWishList = ms.sucWishList(myWishDto);
+		}else if(view.equals("fail")){
+			myWishList = ms.failWishList(myWishDto);
+		}
 		
 		model.addAttribute("myWishList", myWishList);
+		model.addAttribute("pg",pg);
+		model.addAttribute("view",view);
+		model.addAttribute("path","/mwl/image/");
 		
-		return "mwl/myListChange";
+		
+		return "mwl/mySucFailList";
 	}
 	
-	@RequestMapping(value = "pageFormChange")
-	public String pageFormChange(HttpServletRequest req, HttpServletResponse rep, Model model) {
-		
-		String currentPage = req.getParameter("currentPage");
-		
-		session = req.getSession();
-		session.setAttribute("email", "ch@gmail.com");
-		String email = session.getAttribute("email").toString();
-		
-		int total = ms.total(email);
-		Paging pg = new Paging(total, currentPage);
-		
-		model.addAttribute("pg",pg);
-		
-		return "mwl/pageFormChange";
-	}
-	*/
-	@RequestMapping(value = "myContent")
-	public String content() {
-		return "mwl/myWishContent";
-	}
-
 	@RequestMapping(value = "myWishWrite", method = RequestMethod.POST)
 	public String myWishWrite(@ModelAttribute("myWishDto") MyWishDto myWishDto, BindingResult bindingResult, Model model, HttpServletRequest req, MultipartHttpServletRequest multipartRequest) throws IOException {
 		int result = 0;
@@ -180,23 +178,8 @@ public class MWLController {
 		
 		return null;
 	}
-	/*
-	@RequestMapping(value = "bankSearch")
-	public String bankSearch(HttpServletRequest req, HttpServletResponse rep) throws IOException {
-		rep.setContentType("text/html; charset=utf-8");
-		PrintWriter out = rep.getWriter();
-		
-		String account = req.getParameter("account");
-		
-		int result = 0;
-		
-		result = as.searchAccount(account);
-		
-		out.print(result);
-		
-		return null;
-	}*/
 	
+	// 차트 부분
 	@RequestMapping(value="myWishChart", method=RequestMethod.GET)
 	public String myWishChart(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
 		rep.setContentType("text/html; charset=utf-8");
@@ -227,6 +210,7 @@ public class MWLController {
 		return null;
 	}
 	
+	// 선택한 은행 데이터를 JSON화 시키는 부분
 	@RequestMapping(value="bankSelect", method=RequestMethod.GET)
 	public String bankSelect(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
 		rep.setContentType("text/html; charset=utf-8");
@@ -275,6 +259,7 @@ public class MWLController {
 		return null;
 	}
 	
+	// 살 수 있는지 없는지 여부를 확인하는 부분
 	@RequestMapping(value="buyCheck", method=RequestMethod.GET)
 	public String buyCheck(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
 		rep.setContentType("text/html; charset=utf-8");
@@ -290,7 +275,7 @@ public class MWLController {
 		
 		account.setEmail(email);
 		account.setAccount(accountNo);	
-System.out.println("AccountDto : "+account);	
+		System.out.println("AccountDto : "+account);	
 		AccountDto bankSearch = as.bankSearch(account);
 		
 		int bankMoney = bankSearch.getMoney();
@@ -310,6 +295,7 @@ System.out.println("AccountDto : "+account);
 		return null;
 	}
 	
+	// 구매시 위시리스트 구매 성공과 금액을 변동시키는 부분
 	@RequestMapping(value="wishBuy", method=RequestMethod.GET)
 	public String wishBuy(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
 		rep.setContentType("text/html; charset=utf-8");
@@ -350,6 +336,7 @@ System.out.println("AccountDto : "+account);
 		return null;
 	}
 	
+	// 결재시 패스워드 체크 부분
 	@RequestMapping(value="passChk", method=RequestMethod.GET)
 	public String passChk(HttpServletRequest req, HttpServletResponse rep, Model model) throws IOException {
 		rep.setContentType("text/html; charset=utf-8");
@@ -374,14 +361,6 @@ System.out.println("AccountDto : "+account);
 		
 		return null;
 	}
-	
-/*	@Scheduled(fixedRate=5000)
-	public void sucessFail(){
-		System.out.println("5초마다 나온다.");
-		
-	}*/
-	
-	
 	// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
 	public String manageAccount(HttpSession session, Model model){
@@ -422,8 +401,8 @@ System.out.println("AccountDto : "+account);
 	
 	// 계좌 삭제
 	@RequestMapping(value="deleteAccount")
-	public String deleteAccount(HttpSession session, Model model, String account){
-		//System.out.println("CTRL:mwl/deleteAccount: " + account);
+	public String deleteAccount(Model model, String account){
+		System.out.println("CTRL:mwl/deleteAccount: " + account);
 		int result = as.deleteAccount(account);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";

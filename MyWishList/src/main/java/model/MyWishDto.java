@@ -88,13 +88,16 @@ public class MyWishDto {
 	public void setEnd(int end) {
 		this.end = end;
 	}
-	
 	@Override
 	public String toString() {
-		return "MyWishDto [wishNo=" + wishNo + ", email=" + email + ", product=" + product + ", price="
-				+ price + ", remainDate=" + remainDate + ", success=" + success + ", img=" + img
-				+ ", pageNum=" + pageNum + ", start=" + start + ", end=" + end + "]";
+		return "MyWishDto [wishNo=" + wishNo + ", email=" + email
+				+ ", product=" + product + ", price=" + price + ", remainDate="
+				+ remainDate + ", success=" + success + ", img=" + img
+				+ ", pageNum=" + pageNum + ", start=" + start + ", end=" + end
+				+ "]";
 	}
+	
+	
 
 	
 }
