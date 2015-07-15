@@ -93,7 +93,7 @@
 				</form>
 			</td>
 			<td>
-			 	<button onclick="deleteConfirm('${acc.bank}',${acc.account})">X</button>
+			 	<button onclick="deleteConfirm('${acc.bank}','${acc.account}')">X</button>
 			</td>
 		</tr>
 	</c:forEach>
