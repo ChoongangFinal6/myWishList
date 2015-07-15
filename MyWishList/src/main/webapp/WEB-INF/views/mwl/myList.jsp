@@ -35,7 +35,7 @@
 	
 </script>
 </head>
-<body>
+<body id="myWishBody">
 <!-- 계좌목록 -->
 	<div id="mwl_account">
 		계좌정보<button onclick="accountDetail()">상세</button><button onclick="manageAccount()">관리</button>
@@ -61,15 +61,15 @@
 							<span onclick="modify(${wishlist.wishNo })" class="buttonSpan"><a href='#writeDiv' class='openPopup'>수정</a></span>
 							<span onclick="del(${wishlist.wishNo })" class="buttonSpan">삭제</span>
 						</div>
-						<div class="priceDiv overDiv">${wishlist.price }</div>
-						<div class="remainDateDiv overDiv"><fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd"/></div>
+						<div class="priceDiv overDiv">금&nbsp;&nbsp;액 : <fmt:formatNumber pattern="#,###" value="${wishlist.price }"></fmt:formatNumber> 원</div>
+						<div class="remainDateDiv overDiv">종료일 : <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd"/> 까지</div>
 						<input type="hidden" name="wishNo" class="wishNo" value="${wishlist.wishNo }">
 					</div>
 				</li>
 			</c:forEach>
 			<c:if test="${fn:length(myWishList)<3}">
 				<li class="wishLi">
-					<span class="productSpan">aa</span>
+					<span class="productSpan">&nbsp;</span>
 					<div class="newDiv" onclick="newItem()"><a href='#writeDiv' class='openPopup newA newAPlus'>+</a></div>
 				</li>
 			</c:if>
@@ -77,15 +77,24 @@
 		<div><a href='#writeDiv' class='openPopup newA newAText' onclick="newItem()">물건 추가</a></div>
 	</div>
 	<div id="pageForm">
+		<ul id="pageUl" class="pageUl">
 		<c:if test="${pg.startPage > pg.pageBlock }">
-			<a href="myList.html?currentPage=${pg.startPage-pg.pageBlock }">[이전]</a>
+			<li class="pageUl"><a class="pageA forwardArrow" href="myList.html?currentPage=${pg.startPage-pg.pageBlock }">◀</a></li>
 		</c:if>
 		<c:forEach var="i" begin="${pg.startPage }" end="${pg.endPage }">
-			<a href="myList.html?currentPage=${i }">[${i }]</a>
+			<li class="pageUl">
+				<c:if test="${pg.currentPage==i }">
+						<a class="pageA bold" href="myList.html?currentPage=${i }">${i }</a>
+				</c:if>
+				<c:if test="${pg.currentPage!=i }">
+						<a class="pageA" href="myList.html?currentPage=${i }">${i }</a>
+				</c:if>
+			</li>
 		</c:forEach>
 		<c:if test="${pg.endPage < pg.totalPage }">
-			<a href="myList.html?currentPage=${pg.startPage+pg.pageBlock }">[다음]</a>
+			<li class="pageUl"><a class="pageA nextArrow" href="myList.html?currentPage=${pg.startPage+pg.pageBlock }">▶</a></li>
 		</c:if>
+		</ul>
 	</div>
 	<select id="bankSelect" style="display: none;">
 		<option value="All">전체</option>

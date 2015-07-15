@@ -170,6 +170,11 @@ $(function() {
 		$('#modifyImg').remove();
 		
 	});
+	$('.imgDiv').mouseover(function() {
+	    $(this).next().addClass('buttonOver');
+	}).mouseout(function() {
+		$(this).next().removeClass('buttonOver');
+	});
 });
 function modify(wishNo) {
 	$('#modifyImg').remove();

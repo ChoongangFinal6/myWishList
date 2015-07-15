@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
-
+#myWishBody {
+	margin : 0px auto;
+	width: 960px;
+	padding-top: 20px;
+}
 #wishList {
 	
 }
@@ -8,7 +12,7 @@
 	color: black;
 }
 .wishUl {
-	width: 1100px;
+	width: 95%;
 	list-style-type: none;
 	margin: 0px auto;
 	display: inline-table;
@@ -43,7 +47,7 @@
 	border: 2px dotted black;
 	font-weight: 900;
 	font-size: 3em;
-	vertical-align: center;
+	text-align: center;
 }
 
 .newDiv:hover {
@@ -75,7 +79,8 @@
 	height: 28px;
 	width: 250px;
 	top: -30px;
-	text-align: center;
+	text-align: left;
+	padding-left : 19px;
 	vertical-align: center;
 	font-size: 1.2em;
 }
@@ -85,7 +90,7 @@
 }
 
 .priceDiv {
-	
+	padding-left: 25px;
 }
 
 .buttons {
@@ -100,6 +105,9 @@
 }
 
 .buttons:hover {
+	opacity: 1;	
+}
+.buttonOver {
 	opacity: 1;
 }
 .buttonSpan {
@@ -135,7 +143,45 @@
 	border : 2px solid black;
 }
 .newAPlus {
-	font-size: 3em;
+	font-size: 2.7em;
 	margin : 0px auto;
-	
+}
+#pageForm {
+	text-align: center;
+}
+.pageUl {
+	list-style-type: none;
+	margin: 0px auto;
+	display: inline-table;
+	text-align: center;
+}
+.pageA {
+	text-decoration: none;
+	color: black;
+	background-color: #ffd7d7;
+	border: 1px solid black;
+	padding: 2px 5px 2px 5px;
+}
+.pageA:hover {
+	background-color: #fff4f4;
+}
+.pageA span {
+	width: 20px;
+	height: 10px;
+	width: 40px;
+	height: 15px;
+}
+.pageLi {
+	display: inline;
+}
+.bold {
+	font-weight: bolder;
+}
+.forwardArrow {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+.nextArrow {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
