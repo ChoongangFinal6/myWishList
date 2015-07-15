@@ -20,15 +20,15 @@
 	</select>
 	
 	<select id="bankSearch" parameterType="Account" resultType="Account">
-		select * from Account where bank=#{bank} and email=#{email}
+		select * from Account where account=#{account} and email=#{email}
 	</select>
 	
 	<select id="passwordChk" parameterType="Account" resultType="int">
-		select count(*) from Account where bank=#{bank} and password=#{password} and email=#{email}
+		select count(*) from Account where account=#{account} and password=#{password} and email=#{email}
 	</select>
 	
 	<update id="bankBuyUpdate" parameterType="Account">
-		update Account set money=#{money} where bank=#{bank} and email=#{email}
+		update Account set money=#{money} where account=#{account} and email=#{email}
 	</update>
 
 <!-- 계좌 목록 조회 -->

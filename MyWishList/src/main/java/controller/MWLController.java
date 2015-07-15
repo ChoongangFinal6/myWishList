@@ -2,9 +2,13 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+<<<<<<< HEAD
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+=======
+import java.util.Calendar;
+>>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +56,8 @@ public class MWLController {
 		myWishDto.setStart(pg.getStart());
 		myWishDto.setEnd(pg.getEnd());
 		List<MyWishDto> myWishList = ms.wishList(myWishDto);
-		
 		List<AccountDto> bankList = as.bankList(email);
+<<<<<<< HEAD
 		List<AccountDto> aList = as.getAccountList(email);
 		
 		
@@ -80,12 +84,19 @@ public class MWLController {
 		}
 		
 		
+=======
+>>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
-		model.addAttribute("aList", aList);
 		model.addAttribute("pg",pg);
+<<<<<<< HEAD
 				
+=======
+		model.addAttribute("path","/mwl/image/");
+		
+		
+>>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		return "mwl/myList";
 	}
 	
@@ -141,16 +152,24 @@ public class MWLController {
 		int result = 0;
 		session = req.getSession();
 		String email = session.getAttribute("email").toString();
-		MultipartFile file = (MultipartFile) multipartRequest.getFile("img");
-		System.out.println(file);
-		if (file != null) {
-			String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
-			FileUpload.fileUpload(file, path);
-			myWishDto.setImg(file.getOriginalFilename());
+		MultipartFile file = (MultipartFile) multipartRequest.getFile("image");
+		try {
+			if (file != null) {
+				System.out.println(file.toString());
+				String fileName = file.getOriginalFilename();
+				String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+				Calendar cal = Calendar.getInstance();
+				String replaceName = cal.getTimeInMillis() + fileType;
+				String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
+					//	C:\spring\SpringSrc\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyWishList\image
+				FileUpload.fileUpload(file, path, replaceName);
+				myWishDto.setImg(replaceName);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		myWishDto.setEmail(email);
 //		myWishDto.setRemainDate(remainDate);
-		System.out.println("입력때 : "+myWishDto.toString());
 		result = ms.write(myWishDto);
 		if (result == 0) System.out.println("에러");
 		return "redirect:myList.html";
@@ -164,7 +183,6 @@ public class MWLController {
 		MyWishDto myWish = ms.selectItem(email, wishNo);
 		myWish.setRemainDate(myWish.getRemainDate().substring(0, 10));
 		result = "{\"wishNo\":\""+myWish.getWishNo()+"\",\"product\":\""+myWish.getProduct()+"\",\"price\":\""+myWish.getPrice()+"\",\"remainDate\":\""+myWish.getRemainDate()+"\",\"success\":\""+myWish.getSuccess()+"\",\"img\":\""+myWish.getImg()+"\"}";
-		System.out.println(result);
 		rep.setContentType("text/html; charset=utf-8");
 		PrintWriter out = rep.getWriter();
 		out.print(result);
@@ -254,7 +272,7 @@ public class MWLController {
 		
 		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
 
-		String bank = req.getParameter("bank");
+		String accountNo = req.getParameter("account");
 		
 		MyWishDto wishInfo = ms.wishInfo(wishNo);
 				
@@ -262,7 +280,7 @@ public class MWLController {
 		
 		session = req.getSession();		
 		String email = session.getAttribute("email").toString();
-		if(bank.equals("All")){
+		if(accountNo.equals("All")){
 			
 			List<AccountDto> bankList = as.bankList(email);
 			
@@ -281,7 +299,7 @@ public class MWLController {
 			AccountDto account = new AccountDto();
 			
 			account.setEmail(email);
-			account.setBank(bank);
+			account.setAccount(accountNo);
 			
 			AccountDto bankSearch = as.bankSearch(account);
 			
@@ -301,16 +319,16 @@ public class MWLController {
 		PrintWriter out = rep.getWriter();
 		
 		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
-		String bank = req.getParameter("bank");
-		
+		String accountNo = req.getParameter("account");
+	
 		session = req.getSession();		
 		String email = session.getAttribute("email").toString();
-		
+	
 		AccountDto account = new AccountDto();
 		
 		account.setEmail(email);
-		account.setBank(bank);	
-
+		account.setAccount(accountNo);	
+System.out.println("AccountDto : "+account);	
 		AccountDto bankSearch = as.bankSearch(account);
 		
 		int bankMoney = bankSearch.getMoney();
@@ -336,18 +354,18 @@ public class MWLController {
 		PrintWriter out = rep.getWriter();
 		
 		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
-		String bank = req.getParameter("bank");
+		String accountNo = req.getParameter("account");
 		
 		session = req.getSession();		
 		String email = session.getAttribute("email").toString();
 		
 		AccountDto account = new AccountDto();
-		
+
 		account.setEmail(email);
-		account.setBank(bank);	
+		account.setAccount(accountNo);	
 
 		AccountDto bankSearch = as.bankSearch(account);
-		
+			
 		int bankMoney = bankSearch.getMoney();
 		
 		MyWishDto wishInfo = ms.wishInfo(wishNo);
@@ -375,7 +393,7 @@ public class MWLController {
 		rep.setContentType("text/html; charset=utf-8");
 		PrintWriter out = rep.getWriter();
 		
-		String bank = req.getParameter("bank");
+		String accountNo = req.getParameter("account");
 		String password = req.getParameter("password");
 		
 		session = req.getSession();		
@@ -384,7 +402,7 @@ public class MWLController {
 		AccountDto account = new AccountDto();
 		
 		account.setEmail(email);
-		account.setBank(bank);	
+		account.setAccount(accountNo);	
 		account.setPassword(password);	
 		
 		
@@ -395,22 +413,45 @@ public class MWLController {
 		return null;
 	}
 	
+<<<<<<< HEAD
 	// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
 	public String manageAccount(Model model){
 		System.out.println("CTRL:mwl/manageAccount");
+=======
+/*	@Scheduled(fixedRate=5000)
+	public void sucessFail(){
+		System.out.println("5초마다 나온다.");
+		
+	}*/
+	
+	
+	// 계좌 관리 창 호출
+	@RequestMapping(value = "manageAccount")
+	public String manageAccount(HttpSession session, Model model){
+		//System.out.println("CTRL:mwl/manageAccount");
+>>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		String email = session.getAttribute("email").toString();
 		List<AccountDto> aList = as.getAccountList(email);
 		model.addAttribute("aList", aList);
 		return "bank/manageAccount";
 	}
 	
+	// 계좌 목록 조회 (ajax)
+	@RequestMapping(value="loadAccountList")
+	public String accountList(HttpSession session, Model model){
+		//System.out.println("CTRL:mwl/loadAccountList");
+		String email = session.getAttribute("email").toString();
+		List<AccountDto> aList = as.getAccountList(email);
+		model.addAttribute("aList", aList);
+		return "bank/ajax_accountList";
+	}
+	
 	// 새 계좌 등록
 	@RequestMapping(value= "addNewAccount")
 	public String addNewAccount(@ModelAttribute AccountDto account, Model model){
-		System.out.print("CTRL:mwl/addNewAccount: " + account);
+		//System.out.print("CTRL:mwl/addNewAccount: " + account);
 		int result = as.addNewAccount(account);
-		System.out.println("result:"+result);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
 	}
@@ -418,15 +459,21 @@ public class MWLController {
 	// 잔고 변경
 	@RequestMapping(value="editBalance")
 	public String editBalance(@ModelAttribute AccountDto account, Model model){
-		System.out.println("CTRL:mwl/editBalance");
+		//System.out.println("CTRL:mwl/editBalance");
 		int result = as.editBalance(account);
+		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
 	}
 	
 	// 계좌 삭제
 	@RequestMapping(value="deleteAccount")
+<<<<<<< HEAD
 	public String deleteAccount(Model model, String account){
 		System.out.println("CTRL:mwl/deleteAccount: " + account);
+=======
+	public String deleteAccount(HttpSession session, Model model, String account){
+		//System.out.println("CTRL:mwl/deleteAccount: " + account);
+>>>>>>> ea3dce783c8ef4f977b43efb941cfd4f1d1a31a2
 		int result = as.deleteAccount(account);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
