@@ -78,6 +78,6 @@
 			<input type="button" value="취소">
 		</form> 
 	</div>
-
+	<input type="button" onclick="location.href='test2.html'" value="test">
 </body>
 </html>

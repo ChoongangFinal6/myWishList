@@ -2,6 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +15,6 @@ import model.AccountDto;
 import model.MyWishDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,7 +39,7 @@ public class MWLController {
 	HttpSession session = null;
 	
 	@RequestMapping(value = "myList")
-	public String list(HttpServletRequest req, String currentPage, Model model) {
+	public String list(HttpServletRequest req, String currentPage, Model model) throws ParseException, InterruptedException {
 		session = req.getSession();
 		session.setAttribute("email", "ch@gmail.com");
 		String email = session.getAttribute("email").toString();
@@ -53,12 +55,37 @@ public class MWLController {
 		
 		List<AccountDto> bankList = as.bankList(email);
 		List<AccountDto> aList = as.getAccountList(email);
+		
+		
+		// 페이지에 들어올 때 실패한 위시리스트 적용
+		List<MyWishDto> myWishAllList = ms.myWishAllList();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String remainDate = "";
+		Date endDate = null;
+		Date date = new Date();
+		long dateGapLong;
+		int dateGap;
+		// 현재의 날짜와 시간을 getTime으로 가지고 와서 뒤의 시간을 00:00:00으로 바꾸는 로직
+		long today = (date.getTime()/(1000*60*60*24))*(1000*60*60*24)-(1000*60*60*9);
+		
+		for (int i = 0; i < myWishAllList.size(); i++) {
+			remainDate = myWishAllList.get(i).getRemainDate();
+			endDate = transFormat.parse(remainDate);	
+			dateGapLong = (endDate.getTime() - today);
+			dateGap = ((int)(dateGapLong/(1000*60*60*24)));
+			
+			if(dateGap <= 0){
+				ms.myWishFail(myWishAllList.get(i).getWishNo());
+			}
+		}
+		
+		
+		
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
 		model.addAttribute("aList", aList);
 		model.addAttribute("pg",pg);
-		
-		
+				
 		return "mwl/myList";
 	}
 	
@@ -368,15 +395,9 @@ public class MWLController {
 		return null;
 	}
 	
-	@Scheduled(fixedRate=5000)
-	public void sucessFail(){
-		System.out.println("5초마다 나온다.");
-	}
-	
-	
 	// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
-	public String manageAccount(HttpSession session, Model model){
+	public String manageAccount(Model model){
 		System.out.println("CTRL:mwl/manageAccount");
 		String email = session.getAttribute("email").toString();
 		List<AccountDto> aList = as.getAccountList(email);
@@ -404,7 +425,7 @@ public class MWLController {
 	
 	// 계좌 삭제
 	@RequestMapping(value="deleteAccount")
-	public String deleteAccount(HttpSession session, Model model, String account){
+	public String deleteAccount(Model model, String account){
 		System.out.println("CTRL:mwl/deleteAccount: " + account);
 		int result = as.deleteAccount(account);
 		model.addAttribute("result", result);

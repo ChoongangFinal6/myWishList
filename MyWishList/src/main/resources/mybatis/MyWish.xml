@@ -53,5 +53,13 @@
   		update MyWish set success=#{success} where wishNo=#{wishNo}
   	</update>
   	
+  	<select id="myWishAllList" resultMap="MyWishResult">
+  		select * from MyWish where success=0
+  	</select>
+  	
+  	<update id="myWishFail" parameterType="int">
+  		update MyWish set success=2 where wishNo=#{wishNo}
+  	</update>
+  	
 	<!-- Select with no parameters using the result map for Account class. -->
 </mapper>

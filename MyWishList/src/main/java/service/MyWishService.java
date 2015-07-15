@@ -12,4 +12,6 @@ public interface MyWishService {
 	public MyWishDto wishInfo(int wishNo);
 	public int delete(String email, int wishNo);
 	public int myWishUpdate(MyWishDto myWishDto);
+	public List<MyWishDto> myWishAllList();
+	public int myWishFail(int wishNo);
 }

@@ -61,4 +61,18 @@ public class MyWishDaoImpl implements MyWishDao {
 		int mywishUpddate = session.update("myWishUpdate", myWishDto);
 		return mywishUpddate;
 	}
+
+	// 진행중인 모든 위시리스트 가져옴
+	@Override
+	public List<MyWishDto> myWishAllList() {
+		List<MyWishDto> mywishAllList = session.selectList("myWishAllList");
+		return mywishAllList;
+	}
+
+	// 위시리스트 success의 값을 2(실패)로 바꿈
+	@Override
+	public int myWishFail(int wishNo) {
+		int mywishFail = session.update("myWishFail", wishNo);
+		return mywishFail;
+	}
 }
