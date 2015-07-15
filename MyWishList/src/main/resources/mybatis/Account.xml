@@ -30,4 +30,29 @@
 	<update id="bankBuyUpdate" parameterType="Account">
 		update Account set money=#{money} where bank=#{bank} and email=#{email}
 	</update>
+
+<!-- 계좌 목록 조회 -->
+	<select id="getAccountList" parameterType="String" resultMap="AccountResult">
+		SELECT * FROM Account WHERE email=#{email}
+	</select>
+	
+<!-- 단일 계좌 조회 -->
+	<select id="getOneAccount" parameterType="Account" resultType="Account">
+		SELECT * FROM Account WHERE email=#{email} AND account=#{account}  
+	</select>
+	
+<!-- 새 계좌 입력 -->	
+	<insert id="addNewAccount" parameterType="Account">
+		INSERT INTO Account VALUES ( #{account}, #{email},  #{password}, #{bank}, #{money})
+	</insert>
+	
+<!-- 계좌 삭제 -->
+	<delete id="deleteAccount" parameterType="String">
+		DELETE FROM Account WHERE account=#{account}
+	</delete>
+	
+<!-- 잔고 변경 -->
+	<update id="editBalance" parameterType="Account">
+		UPDATE Account SET money=#{money} WHERE email=#{email} AND account=#{account}
+	</update>
 </mapper>

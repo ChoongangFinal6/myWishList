@@ -14,7 +14,7 @@
 	</resultMap>
 	
 	<select id="total" parameterType="String" resultType="int">
- 	 	select count(*) from MyWish where email=#{email}
+ 	 	select count(*) from MyWish where email=#{email} and success=0
   	</select>
   	
 	<select id="wishInfo" parameterType="int" resultType="MyWish">

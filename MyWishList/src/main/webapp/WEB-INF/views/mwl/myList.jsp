@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -10,8 +9,19 @@
 <link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css"> 
 <!-- Magnific Popup core JS file -->
 <script src="resources/magnific-popup/jquery.magnific-popup.js"></script>
+<script type="text/javascript">
+	function manageAccount(){
+		var win = window.open("manageAccount.html", "계좌관리", "width=600, height=400,resizable=false");
+	}
+</script>
 </head>
 <body>
+	<div id="mwl_account">
+		계좌정보<button onclick="manageAccount()">관리</button>
+		<c:forEach var="account" items="${aList}">
+			<div>${account.bank} ${account.account} ${account.money}</div>
+		</c:forEach>
+	</div>
 	<div id="wishList">
 		<ul id="wishUl" class="wishUl">
 			<c:forEach var="wishlist" items="${myWishList}">
@@ -40,13 +50,13 @@
 			<c:if test="${fn:length(myWishList)<3}">
 				<li class="wishLi">
 					<span class="productSpan">aa</span>
-					<div class="newDiv" onclick="newItem()"><a href='#writeDiv' class='openPopup newA'>+</a></div>
+					<div class="newDiv" onclick="newItem()"><a href='#writeDiv' class='openPopup newA newAPlus'>+</a></div>
 				</li>
 			</c:if>
 		</ul>
 		<div><a href='#writeDiv' class='openPopup newA newAText' onclick="newItem()">물건 추가</a></div>
 	</div>
-	<div style="width: 800px;">
+	<%-- <div style="width: 800px;">
 		<input type="button" id="createBank" value="은행등록">
 		<div id="bankCreForm"></div>
 		<br>
@@ -64,21 +74,21 @@
 			<input type="password" id="password" placeholder="암호">
 			<input type="button" id="buy" value="구입하기">
 		</div>
-		<div id="pageForm">
-			<c:if test="${pg.startPage > pg.pageBlock }">
-				<a href="myList.html?currentPage=${pg.startPage-pg.pageBlock }">[이전]</a>
-			</c:if>
-			<c:forEach var="i" begin="${pg.startPage }" end="${pg.endPage }">
-				<a href="myList.html?currentPage=${i }">[${i }]</a>
-			</c:forEach>
-			<c:if test="${pg.endPage < pg.totalPage }">
-				<a href="myList.html?currentPage=${pg.startPage+pg.pageBlock }">[다음]</a>
-			</c:if>
-		</div>
 		<input type="hidden" id="imsiWishNo" value="">
 		<input type="hidden" id="imsiWishNoMoney" value="">
 		<input type="hidden" id="imsiBank" value="">
 		<input type="hidden" id="imsiBankMoney" value="">
+	</div> --%>
+	<div id="pageForm">
+		<c:if test="${pg.startPage > pg.pageBlock }">
+			<a href="myList.html?currentPage=${pg.startPage-pg.pageBlock }">[이전]</a>
+		</c:if>
+		<c:forEach var="i" begin="${pg.startPage }" end="${pg.endPage }">
+			<a href="myList.html?currentPage=${i }">[${i }]</a>
+		</c:forEach>
+		<c:if test="${pg.endPage < pg.totalPage }">
+			<a href="myList.html?currentPage=${pg.startPage+pg.pageBlock }">[다음]</a>
+		</c:if>
 	</div>
 	<div id="writeDiv" class="mfp-hide">
 		<form action="myWishWrite.html" method="POST" enctype="multipart/form-data" name="myWishDto">
@@ -93,5 +103,6 @@
 			<input type="button" value="취소">
 		</form> 
 	</div>
+
 </body>
 </html>

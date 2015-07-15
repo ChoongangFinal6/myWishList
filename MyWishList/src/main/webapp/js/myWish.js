@@ -197,7 +197,9 @@ function modify(wishNo) {
 */	});
 }
 function newItem() {
-	$('#imgSpan').html("<input type='file' name='image'>");
+	$('.input').val("");
+	$('#imgInput').val("");
+	$('#imageInput').show();
 }
 function del(wishNo) {
 	if (confirm("삭제하시겠습니까")) {

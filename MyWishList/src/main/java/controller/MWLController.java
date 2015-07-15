@@ -13,6 +13,7 @@ import model.AccountDto;
 import model.MyWishDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,14 +53,17 @@ public class MWLController {
 		List<MyWishDto> myWishList = ms.wishList(myWishDto);
 		
 		List<AccountDto> bankList = as.bankList(email);
-		
+		List<AccountDto> aList = as.getAccountList(email);
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
+		model.addAttribute("aList", aList);
 		model.addAttribute("pg",pg);
 		model.addAttribute("path","/mwl/image/");
 		
+		
 		return "mwl/myList";
 	}
+	
 	
 	/*
 	@RequestMapping(value = "myListChange")
@@ -113,15 +117,20 @@ public class MWLController {
 		session = req.getSession();
 		String email = session.getAttribute("email").toString();
 		MultipartFile file = (MultipartFile) multipartRequest.getFile("image");
-		if (file != null) {
-			String fileName = file.getOriginalFilename();
-			String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
-			Calendar cal = Calendar.getInstance();
-			String replaceName = cal.getTimeInMillis() + fileType;
-			String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
-				//	C:\spring\SpringSrc\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyWishList\image
-			FileUpload.fileUpload(file, path, replaceName);
-			myWishDto.setImg(replaceName);
+		try {
+			if (file != null) {
+				System.out.println(file.toString());
+				String fileName = file.getOriginalFilename();
+				String fileType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+				Calendar cal = Calendar.getInstance();
+				String replaceName = cal.getTimeInMillis() + fileType;
+				String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
+					//	C:\spring\SpringSrc\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\MyWishList\image
+				FileUpload.fileUpload(file, path, replaceName);
+				myWishDto.setImg(replaceName);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		myWishDto.setEmail(email);
 //		myWishDto.setRemainDate(remainDate);
@@ -367,6 +376,51 @@ public class MWLController {
 		
 		return null;
 	}
+/*	
+	@Scheduled(fixedRate=5000)
+	public void sucessFail(){
+		System.out.println("5초마다 나온다.");
+	}
+	
+*/	
+	// 계좌 관리 창 호출
+	@RequestMapping(value = "manageAccount")
+	public String manageAccount(HttpSession session, Model model){
+		System.out.println("CTRL:mwl/manageAccount");
+		String email = session.getAttribute("email").toString();
+		List<AccountDto> aList = as.getAccountList(email);
+		model.addAttribute("aList", aList);
+		return "bank/manageAccount";
+	}
+	
+	// 새 계좌 등록
+	@RequestMapping(value= "addNewAccount")
+	public String addNewAccount(@ModelAttribute AccountDto account, Model model){
+		System.out.print("CTRL:mwl/addNewAccount: " + account);
+		int result = as.addNewAccount(account);
+		model.addAttribute("result", result);
+		return "forward:manageAccount.html";
+	}
+
+	// 잔고 변경
+	@RequestMapping(value="editBalance")
+	public String editBalance(@ModelAttribute AccountDto account, Model model){
+		System.out.print("CTRL:mwl/editBalance");
+		int result = as.editBalance(account);
+		System.out.println("_____"+ result);
+		model.addAttribute("result", result);
+		return "forward:manageAccount.html";
+	}
+	
+	// 계좌 삭제
+	@RequestMapping(value="deleteAccount")
+	public String deleteAccount(HttpSession session, Model model, String account){
+		System.out.println("CTRL:mwl/deleteAccount: " + account);
+		int result = as.deleteAccount(account);
+		model.addAttribute("result", result);
+		return "forward:manageAccount.html";
+	}
+	
 }
 
 //rep.setContentType("text/html; charset=utf-8");
