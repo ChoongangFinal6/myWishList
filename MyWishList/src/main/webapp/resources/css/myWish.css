@@ -23,14 +23,18 @@
 	float: left;
 	padding: 20px;
 }
-
-.wishDiv {
+.wishDiv,.newDiv {
 	width: 250px;
-	overflow: hidden;
 	height: 200px;
-	border: 2px solid black;
-	border-radius: 20px;
+	overflow: hidden;
 	margin: 0px;
+	border-radius: 20px;
+	margin-top: 10px;
+	padding: 5px;
+	
+}
+.wishDiv {
+	border: 2px solid black;
 }
 
 .productSpan {
@@ -40,16 +44,14 @@
 }
 
 .newDiv {
-	width: 250px;
-	height: 200px;
-	margin: 0px;
-	border-radius: 20px;
 	border: 2px dotted black;
 	font-weight: 900;
 	font-size: 3em;
 	text-align: center;
 }
-
+#newADiv{
+	padding-left : 80px;
+}
 .newDiv:hover {
 	background-color: #d9d9d9;
 }
@@ -99,6 +101,8 @@
 	height: 30px;
 	width: 250px;
 	background-color: rgba(0, 0, 0, 0.4);
+	border-radius : 10px;
+	overflow : hidden;
 	opacity: 0;
 	display : inline-table;
 	text-align: center;
@@ -118,8 +122,14 @@
 	font-size:1.2em;
 /* 	text-shadow : -1.5px 0 #ffffff, 0 1.5px #ffffff, 1.5px 0 #ffffff, 0 -1.5px #ffffff; */
 	text-shadow: 0px 0px 4px #ffffff, 0px 0px 4px #ffffff, 0px 0px 4px #ffffff;
-	
 	cursor: pointer;
+}
+.buttonSpan:hover {
+	opacity: 0.5;
+}
+.newA {
+	width: 100%;
+	height: 100%;
 }
 #writeDiv {
 	border: 2px solid blue;
@@ -131,17 +141,21 @@
 	background: #FFF;
 	margin : 20px auto;
 	padding: 20px;
-	border-radius : 15px;
-}
-.newA {
-	width: 100%;
-	height: 100%;
+	border-radius : 20px;
 }
 .newAText {
 	font-size: 1.2em;
 	font-weight: bolder;
-	border : 2px solid black;
+	border : 1px solid black;
+	border-radius : 12px;
+	padding: 2px 5px 3px 5px;
+	text-align: center;
+	box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
 }
+.newAText:HOVER {
+	background-color: #cae4ff;	
+}
+	
 .newAPlus {
 	font-size: 2.7em;
 	margin : 0px auto;
@@ -191,4 +205,16 @@
 .nextArrow {
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
+}
+
+th {
+	font-size:1.2em;
+}
+.writeInput {
+	font-size: 1.2em;
+	height: 1.3em;
+	border : 2px solid blue; 	
+}
+.input{
+	
 }
