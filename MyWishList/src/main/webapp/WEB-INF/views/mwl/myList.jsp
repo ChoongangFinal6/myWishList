@@ -16,7 +16,7 @@
 
 	// 계좌 관리 팝업창
 	function manageAccount(){
-		var win = window.open("manageAccount.html", "계좌관리", "width=500, height=400,resizable=false");
+		var win = window.open("manageAccount.html", "계좌관리", "width=650, height=400,resizable=false");
 	}
 	
 	// 계좌 목록 Load

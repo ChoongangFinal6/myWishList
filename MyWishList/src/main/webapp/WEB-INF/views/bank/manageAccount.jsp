@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="bank_template.jsp" %>
 <!DOCTYPE html>
@@ -26,6 +26,9 @@
 #newAccountForm {
 	
 }
+
+.accountForm {margin: 5px;}
+.inputStyle {margin-left: 10px;}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -114,36 +117,47 @@
 			<td>${acc.account}</td>
 			<td>${acc.money}</td>
 			<td>
-				<form action="#">
+				<form action="#" class="accountForm">
 					<input type="hidden" name="email" value="${sessionScope.email}">
 					<input type="hidden" name="account" value="${acc.account}">
 					<input type="number" name="money" id="money">
 					<button class="moneyEdit" id="incr">+</button>
 					<button class="moneyEdit" id="decr">-</button>
+					<input type="text" name="money" id="money" >
 					<!-- <button onclick="editBalance()">입출금</button> -->
 				</form>
 			</td>
 			<td>
-			 	<button onclick="deleteConfirm('${acc.bank}','${acc.account}')">X</button>
+			 	<input style="margin-left: 6px; margin-top: 3px;" type="button" onclick="deleteConfirm('${acc.bank}','${acc.account}')" value="x"/>
 			</td>
 		</tr>
 	</c:forEach>
 	</table>
 </div>
 
-<div id="newAccountForm">
+<fieldset>
+<legend>등록란</legend>
+<div id="newAccount">
+
 	<form action="addNewAccount.html">
 	<input type="hidden" name="email" value="${sessionScope.email}">
-	은행<select name="bank" required="required">
+	은행<select name="bank" required="required" class="inputStyle">
 		<option value="">선택</option>
 		<option value="농협">농협</option>
+		<option value="신협">신협</option>
+		<option value="신한">신한</option>
 		<option value="국민">국민</option>
 	</select>
-	계좌번호<input type="text" name="account" required="required" maxlength="20">
-	결제비밀번호<input type="text" name="password" required="required" maxlength="8" >
-	잔고<input type="number" name="money" maxlength="20">
-	<button>등록</button>
+	<br>
+	계좌번호 <input type="text" name="account" required="required" maxlength="20" style="width: 150px;" class="inputStyle">
+	<br>
+	<div>
+		결제비밀번호 <input type="password" name="password" required="required" maxlength="8" style="width: 50px;" class="inputStyle"><br>
+		잔고 <input type="number" name="money" maxlength="20" style="width: 120px;" class="inputStyle"><br>
+		<button>등록</button>
+	</div>
 	</form>
 </div>
+</fieldset>
 </body>
 </html>
