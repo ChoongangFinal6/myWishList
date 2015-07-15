@@ -13,7 +13,7 @@
 	top:100px;
 	left:100px;
 	z-index:10;
-	width:250px;
+	width:300px;
 	background-color:#44c767;
 	border-radius:28px;
 	border:1px solid #18ab29;
@@ -29,30 +29,33 @@
 </style>
 <script type="text/javascript">
 	$(function(){
-		var result = ${result};
+		var result = "${result}";
 		switch (result){
-		case 511 :
-			showMsg("<div class='fadeMsg'>새로운 계좌가 등록되었습니다</div>");		
+		case '511' :
+			showMsg("<div class='fadeMsg'>새로운 계좌가 등록되었습니다</div>");
+			refreshParent();
 			break;
-		case 512 :
-			showMsg("<div class='fadeMsg' style='background-color:#c74467'>이미 등록되어있는  계좌입니다</div>");
+		case '512' :
+			showMsg("<div class='fadeMsg' style='background-color:#c74467'>이미 등록되어있는 계좌입니다</div>");
 			break;
-		case 513 :
+		case '513' :
 			showMsg("<div class='fadeMsg' style='background-color:#c74467'>계좌등록에 실패하였습니다</div>");
 			break;
-		case 521 :
+		case '521' :
 			showMsg("<div class='fadeMsg'>계좌 정보가 삭제되었습니다</div>");
+			refreshParent();
 			break;
-		case 522 :
+		case '522' :
 			showMsg("<div class='fadeMsg' style='background-color:#c74467'>계좌 정보 삭제에 실패하였습니다</div>");
 			break;
-		case 531 :
+		case '531' :
 			showMsg("<div class='fadeMsg'>계좌의 잔고가 변경되었습니다.</div>");
+			refreshParent();
 			break;
-		case 532 :
+		case '532' :
 			showMsg("<div class='fadeMsg' style='background-color:#c74467'>현재 잔고보다 많은 금액을 차감할 수 없습니다</div>");
 			break;
-		case 533 :
+		case '533' :
 			showMsg("<div class='fadeMsg' style='background-color:#c74467'>계좌의 잔고 변경에 실패하였습니다</div>");
 			break;
 		default :
@@ -64,15 +67,18 @@
 	function showMsg(msg){
 		$('body').append(msg);
 		$('.fadeMsg').fadeIn();
-		setTimeout(function(){ $('.fadeMsg').fadeOut();	}, 2000);
+		setTimeout(function(){ $('.fadeMsg').fadeOut();	}, 1500);
 	}
 	
+	
+	// 계좌 삭제 Confirm창
 	function deleteConfirm(bank, account){
 		if(confirm(bank + "은행 ("+ account + ")\n계좌 정보를 삭제 하시겠습니까?")){
 			location.href="deleteAccount.html?account="+account;
 		}
 	}
 	
+	// 잔고 변경
  	$(function(){
  		$('.moneyEdit').click(function(){
  			console.log("event");
@@ -85,7 +91,12 @@
 			console.log($(form).children('#money').val());
 			$(form).attr('action', 'editBalance.html').submit();
  		});
-	}); 
+	});
+ 	
+	// 계좌생성 및 변경시 부모창 갱신
+ 	function refreshParent(){
+ 		opener.loadAccountList();
+ 	}
 </script>
 
 </head>

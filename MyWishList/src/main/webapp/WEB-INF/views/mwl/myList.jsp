@@ -10,18 +10,38 @@
 <!-- Magnific Popup core JS file -->
 <script src="resources/magnific-popup/jquery.magnific-popup.js"></script>
 <script type="text/javascript">
+	$(function(){
+		loadAccountList();		
+	});
+
+	// 계좌 관리 팝업창
 	function manageAccount(){
-		var win = window.open("manageAccount.html", "계좌관리", "width=600, height=400,resizable=false");
+		var win = window.open("manageAccount.html", "계좌관리", "width=500, height=400,resizable=false");
 	}
+	
+	// 계좌 목록 Load
+	function loadAccountList(){
+		$.ajax({
+			url: "loadAccountList.html",
+			success : function(result) {
+				$('#mwl_acc_list').html(result);
+			}
+		});
+	}
+	
+	function accountDetail(){
+		$('#accounDetail').toggle('1000');
+	}
+	
 </script>
 </head>
 <body>
+<!-- 계좌목록 -->
 	<div id="mwl_account">
-		계좌정보<button onclick="manageAccount()">관리</button>
-		<c:forEach var="account" items="${aList}">
-			<div>${account.bank} ${account.account} ${account.money}</div>
-		</c:forEach>
+		계좌정보<button onclick="accountDetail()">상세</button><button onclick="manageAccount()">관리</button>
+		<div id="mwl_acc_list"></div>
 	</div>
+<!-- WishList -->	
 	<div id="wishList">
 		<ul id="wishUl" class="wishUl">
 			<c:forEach var="wishlist" items="${myWishList}">
@@ -63,7 +83,7 @@
 		<select id="bankSelect" style="display: none;">
 			<option value="All">전체</option>
 			<c:forEach var="opt" items="${bankList }">
-				<option value="${opt.bank }">${opt.bank }</option>
+				<option value="${opt.account}">${opt.bank}/${opt.account}</option>
 			</c:forEach>
 		</select>
 		<div id="chart" style="display: none;">

@@ -116,17 +116,17 @@ $(function() {
 			$('#wishChart').highcharts(option);
 		});
 	});
-
-	$('#bankSelect').change(function() {
-		var bank = $(this).val();
+	$('#bankSelect').change(function(){
+		var account = $(this).val();
 		var wishNo = $('#imsiWishNo').val()
-		var sendData = "bank=" + bank + "&wishNo=" + wishNo;
+		var sendData = "account=" + account + "&wishNo=" + wishNo;
+		alert(sendData);
 		$.getJSON('bankSelect.html', sendData, function(data) {
 			option.series[0].data = data;
 			$('#wishChart').highcharts(option);
-			$('#imsiBank').val(bank);
-		});
-		if (bank != 'All') {
+			$('#imsiBank').val(account);
+	    });
+		if(account != 'All'){
 			$.get('buyCheck.html', sendData, function(data) {
 				if (data > 0) {
 					$('#buyBtn').css('display', 'block');
@@ -148,14 +148,13 @@ $(function() {
 
 	$('#buy').click(function() {
 		var result = "";
-		var bank = $('#bankSelect').val();
+		var account = $('#bankSelect').val();
 		var wishNo = $('#imsiWishNo').val();
 		var password = $('#password').val();
-
-		var bankName = "bank=" + bank + "&password=" + password;
-		$.get("passChk.html", bankName, function(data) {
-			if (data == 1) {
-				var sendData = "bank=" + bank + "&wishNo=" + wishNo;
+		var params = "account=" + account + "&password=" + password;
+		$.get("passChk.html", params, function(data) {
+			if(data == 1){
+				var sendData = "account=" + account + "&wishNo=" + wishNo;
 				$.get("wishBuy.html", sendData, function(data) {
 					alert("구매에 성공하셨습니다");
 					location.href = 'myList.html';
