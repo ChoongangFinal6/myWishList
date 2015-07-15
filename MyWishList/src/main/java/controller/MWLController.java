@@ -49,7 +49,7 @@ public class MWLController {
 		myWishDto.setEmail(email);
 		myWishDto.setStart(pg.getStart());
 		myWishDto.setEnd(pg.getEnd());
-		List<MyWishDto> myWishList = ms.wishList(myWishDto);	
+		List<MyWishDto> myWishList = ms.wishList(myWishDto);
 		List<AccountDto> bankList = as.bankList(email);
 		
 		model.addAttribute("myWishList", myWishList);
@@ -225,7 +225,7 @@ public class MWLController {
 		
 		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
 
-		String bank = req.getParameter("bank");
+		String accountNo = req.getParameter("account");
 		
 		MyWishDto wishInfo = ms.wishInfo(wishNo);
 				
@@ -233,7 +233,7 @@ public class MWLController {
 		
 		session = req.getSession();		
 		String email = session.getAttribute("email").toString();
-		if(bank.equals("All")){
+		if(accountNo.equals("All")){
 			
 			List<AccountDto> bankList = as.bankList(email);
 			
@@ -252,7 +252,7 @@ public class MWLController {
 			AccountDto account = new AccountDto();
 			
 			account.setEmail(email);
-			account.setBank(bank);
+			account.setAccount(accountNo);
 			
 			AccountDto bankSearch = as.bankSearch(account);
 			
@@ -272,16 +272,16 @@ public class MWLController {
 		PrintWriter out = rep.getWriter();
 		
 		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
-		String bank = req.getParameter("bank");
-		
+		String accountNo = req.getParameter("account");
+	
 		session = req.getSession();		
 		String email = session.getAttribute("email").toString();
-		
+	
 		AccountDto account = new AccountDto();
 		
 		account.setEmail(email);
-		account.setBank(bank);	
-
+		account.setAccount(accountNo);	
+System.out.println("AccountDto : "+account);	
 		AccountDto bankSearch = as.bankSearch(account);
 		
 		int bankMoney = bankSearch.getMoney();
@@ -307,18 +307,18 @@ public class MWLController {
 		PrintWriter out = rep.getWriter();
 		
 		int wishNo = Integer.parseInt(req.getParameter("wishNo"));
-		String bank = req.getParameter("bank");
+		String accountNo = req.getParameter("account");
 		
 		session = req.getSession();		
 		String email = session.getAttribute("email").toString();
 		
 		AccountDto account = new AccountDto();
-		
+
 		account.setEmail(email);
-		account.setBank(bank);	
+		account.setAccount(accountNo);	
 
 		AccountDto bankSearch = as.bankSearch(account);
-		
+			
 		int bankMoney = bankSearch.getMoney();
 		
 		MyWishDto wishInfo = ms.wishInfo(wishNo);
@@ -346,7 +346,7 @@ public class MWLController {
 		rep.setContentType("text/html; charset=utf-8");
 		PrintWriter out = rep.getWriter();
 		
-		String bank = req.getParameter("bank");
+		String accountNo = req.getParameter("account");
 		String password = req.getParameter("password");
 		
 		session = req.getSession();		
@@ -355,7 +355,7 @@ public class MWLController {
 		AccountDto account = new AccountDto();
 		
 		account.setEmail(email);
-		account.setBank(bank);	
+		account.setAccount(accountNo);	
 		account.setPassword(password);	
 		
 		

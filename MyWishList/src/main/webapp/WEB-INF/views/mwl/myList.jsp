@@ -57,7 +57,7 @@
 		<select id="bankSelect" style="display: none;">
 			<option value="All">전체</option>
 			<c:forEach var="opt" items="${bankList }">
-				<option value="${opt.bank }">${opt.bank }</option>
+				<option value="${opt.account}">${opt.bank}/${opt.account}</option>
 			</c:forEach>
 		</select>
 		<div id="chart" style="display: none;">
