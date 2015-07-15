@@ -134,29 +134,28 @@
 	</table>
 </div>
 
+<form action="addNewAccount.html">
 <fieldset>
-<legend>등록란</legend>
-<div id="newAccount">
-
-	<form action="addNewAccount.html">
-	<input type="hidden" name="email" value="${sessionScope.email}">
-	은행<select name="bank" required="required" class="inputStyle">
-		<option value="">선택</option>
-		<option value="농협">농협</option>
-		<option value="신협">신협</option>
-		<option value="신한">신한</option>
-		<option value="국민">국민</option>
-	</select>
-	<br>
-	계좌번호 <input type="text" name="account" required="required" maxlength="20" style="width: 150px;" class="inputStyle">
-	<br>
-	<div>
-		결제비밀번호 <input type="password" name="password" required="required" maxlength="8" style="width: 50px;" class="inputStyle"><br>
-		잔고 <input type="number" name="money" maxlength="20" style="width: 120px;" class="inputStyle"><br>
-		<button>등록</button>
+	<legend>등록란</legend>
+	<div id="newAccount">
+		<input type="hidden" name="email" value="${sessionScope.email}">
+		은행<select name="bank" required="required" class="inputStyle">
+			<option value="">선택</option>
+			<option value="농협">농협</option>
+			<option value="신협">신협</option>
+			<option value="신한">신한</option>
+			<option value="국민">국민</option>
+		</select>
+		<br>
+		계좌번호 <input type="text" name="account" required="required" maxlength="20" style="width: 150px;" class="inputStyle">
+		<br>
+		<div>
+			결제비밀번호 <input type="password" name="password" required="required" maxlength="8" style="width: 50px;" class="inputStyle"><br>
+			잔고 <input type="number" name="money" maxlength="20" style="width: 120px;" class="inputStyle"><br>
+			<button>등록</button>
+		</div>
 	</div>
-	</form>
-</div>
 </fieldset>
+</form>
 </body>
 </html>
