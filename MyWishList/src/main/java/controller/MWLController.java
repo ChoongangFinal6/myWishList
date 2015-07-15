@@ -49,13 +49,11 @@ public class MWLController {
 		myWishDto.setEmail(email);
 		myWishDto.setStart(pg.getStart());
 		myWishDto.setEnd(pg.getEnd());
-		List<MyWishDto> myWishList = ms.wishList(myWishDto);
-		
+		List<MyWishDto> myWishList = ms.wishList(myWishDto);	
 		List<AccountDto> bankList = as.bankList(email);
-		List<AccountDto> aList = as.getAccountList(email);
+		
 		model.addAttribute("myWishList", myWishList);
 		model.addAttribute("bankList", bankList);
-		model.addAttribute("aList", aList);
 		model.addAttribute("pg",pg);
 		
 		
@@ -367,13 +365,14 @@ public class MWLController {
 		
 		return null;
 	}
-/*	
+	
 	@Scheduled(fixedRate=5000)
 	public void sucessFail(){
 		System.out.println("5초마다 나온다.");
+		
 	}
 	
-*/	
+	
 	// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
 	public String manageAccount(HttpSession session, Model model){
@@ -382,6 +381,16 @@ public class MWLController {
 		List<AccountDto> aList = as.getAccountList(email);
 		model.addAttribute("aList", aList);
 		return "bank/manageAccount";
+	}
+	
+	// 계좌 목록 조회 (ajax)
+	@RequestMapping(value="loadAccountList")
+	public String accountList(HttpSession session, Model model){
+		System.out.println("CTRL:mwl/loadAccountList");
+		String email = session.getAttribute("email").toString();
+		List<AccountDto> aList = as.getAccountList(email);
+		model.addAttribute("aList", aList);
+		return "bank/ajax_accountList";
 	}
 	
 	// 새 계좌 등록
@@ -396,9 +405,8 @@ public class MWLController {
 	// 잔고 변경
 	@RequestMapping(value="editBalance")
 	public String editBalance(@ModelAttribute AccountDto account, Model model){
-		System.out.print("CTRL:mwl/editBalance");
+		System.out.println("CTRL:mwl/editBalance");
 		int result = as.editBalance(account);
-		System.out.println("_____"+ result);
 		model.addAttribute("result", result);
 		return "forward:manageAccount.html";
 	}

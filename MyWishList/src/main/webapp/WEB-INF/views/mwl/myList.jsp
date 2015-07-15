@@ -6,17 +6,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>My Wish List (${email })</title>
 <script type="text/javascript">
+	$(function(){
+		loadAccountList();		
+	});
+
 	function manageAccount(){
-		var win = window.open("manageAccount.html", "계좌관리", "width=600, height=400,resizable=false");
+		var win = window.open("manageAccount.html", "계좌관리", "width=500, height=400,resizable=false");
 	}
+	
+	function loadAccountList(){
+		$.ajax({
+			url: "loadAccountList.html",
+			async : true,
+			success : function(result) {
+				$('#mwl_acc_list').html(result);
+			}
+		});
+	}
+	
 </script>
 </head>
-<body>
+<body onload="loadAccountList()">
 	<div id="mwl_account">
 		계좌정보<button onclick="manageAccount()">관리</button>
-		<c:forEach var="account" items="${aList}">
-			<div>${account.bank} ${account.account} ${account.money}</div>
-		</c:forEach>
+		<div id="mwl_acc_list"></div>
 	</div>
 	<div id="wishList">
 		<c:forEach var="wishlist" items="${myWishList}">
