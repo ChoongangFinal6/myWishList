@@ -14,9 +14,14 @@ import model.MyWishDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import upload.FileUpload;
 import service.AccountService;
 import service.MyWishService;
 import service.Paging;
@@ -98,6 +103,51 @@ public class MWLController {
 	@RequestMapping(value = "myContent")
 	public String content() {
 		return "mwl/myWishContent";
+	}
+
+	@RequestMapping(value = "myWishWrite", method = RequestMethod.POST)
+	public String myWishWrite(@ModelAttribute("myWishDto") MyWishDto myWishDto, BindingResult bindingResult, Model model, HttpServletRequest req, MultipartHttpServletRequest multipartRequest) throws IOException {
+		int result = 0;
+		session = req.getSession();
+		String email = session.getAttribute("email").toString();
+		MultipartFile file = (MultipartFile) multipartRequest.getFile("img");
+		System.out.println(file);
+		if (file != null) {
+			String path = multipartRequest.getServletContext().getRealPath("/image");   //제 바탕화면의 upload 폴더라는 경로입니다. 자신의 경로를 쓰세요.
+			FileUpload.fileUpload(file, path);
+			myWishDto.setImg(file.getOriginalFilename());
+		}
+		myWishDto.setEmail(email);
+//		myWishDto.setRemainDate(remainDate);
+		System.out.println("입력때 : "+myWishDto.toString());
+		result = ms.write(myWishDto);
+		if (result == 0) System.out.println("에러");
+		return "redirect:myList.html";
+	}
+	
+	@RequestMapping(value = "myWishUpdate")
+	public String myWishUpdate(int wishNo, HttpSession session, HttpServletResponse rep) throws IOException {
+		String email = session.getAttribute("email").toString();
+		String result = "";
+		
+		MyWishDto myWish = ms.selectItem(email, wishNo);
+		myWish.setRemainDate(myWish.getRemainDate().substring(0, 10));
+		result = "{\"wishNo\":\""+myWish.getWishNo()+"\",\"product\":\""+myWish.getProduct()+"\",\"price\":\""+myWish.getPrice()+"\",\"remainDate\":\""+myWish.getRemainDate()+"\",\"success\":\""+myWish.getSuccess()+"\",\"img\":\""+myWish.getImg()+"\"}";
+		System.out.println(result);
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		out.print(result);
+		return null;
+	}
+	
+	@RequestMapping(value = "myWishDelete")
+	public String myWishDelete(int wishNo, HttpSession session, HttpServletResponse rep) throws IOException {
+		String email = session.getAttribute("email").toString();
+		int result = ms.delete(email, wishNo);
+		rep.setContentType("text/html; charset=utf-8");
+		PrintWriter out = rep.getWriter();
+		out.print(result);
+		return null;
 	}
 	
 	@RequestMapping(value = "bankCreateForm")

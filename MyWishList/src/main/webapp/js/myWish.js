@@ -65,7 +65,7 @@ $(function () {
         // series 부분
         series: [{name: "금액",colorByPoint: true}]
     };
-	
+
 	$('.wishDiv').each(function(index){
 		$(this).click(function(){
 			var sendData = $(this).find($('.wishNo')).val();
@@ -133,3 +133,33 @@ $(function () {
 		});
 	});
 });
+function modify(wishNo) {
+	var sendData = "wishNo="+wishNo;
+	$.getJSON('myWishUpdate.html', sendData, function(data) {
+		$('#wishNo').val(data.wishNo);
+		$('#product').val(data.product);
+		$('#price').val(data.price);
+		$('#remainDate').val(data.remainDate);
+		$('#img').val(data.img);
+		$('#success').val(data.success);
+	});
+}
+function newItem() {
+	$('.input').val();
+	
+}
+function del(wishNo) {
+	if(confirm("삭제하시겠습니까")) {
+		var sendData = "wishNo="+wishNo;
+		$.ajax({
+			  url: "myWishDelete.html",
+			  data: sendData,
+				async : true,
+				success : function(data) {
+					if (data == 1) {
+						location.reload();
+					}
+				}
+		});
+	}
+}

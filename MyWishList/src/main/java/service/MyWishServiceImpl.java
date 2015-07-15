@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import dao.MyWishDao;
 
 @Service
-public class MyWishServiceImpl implements MyWishService{
+public class MyWishServiceImpl implements MyWishService {
 	@Autowired
 	private MyWishDao mw;
-	
+
 	public List<MyWishDto> wishList(MyWishDto myWishDto) {
 		return mw.wishList(myWishDto);
 	}
@@ -22,12 +22,28 @@ public class MyWishServiceImpl implements MyWishService{
 		return mw.total(email);
 	}
 
+	@Override
+	public int write(MyWishDto myWishDto) {
+		return mw.write(myWishDto);
+	}
+
+	@Override
+	public MyWishDto selectItem(String email, int wishNo) {
+		return mw.selectItem(email, wishNo);
+	}
+
+	@Override
 	public MyWishDto wishInfo(int wishNo) {
 		return mw.wishInfo(wishNo);
 	}
 
+	@Override
+	public int delete(String email, int wishNo) {
+		return mw.delete(email, wishNo);
+	}
+
+	@Override
 	public int myWishUpdate(MyWishDto myWishDto) {
 		return mw.myWishUpdate(myWishDto);
 	}
-
 }

@@ -1,0 +1,1 @@
+select count(wishNo) from MyWish where wishNo = 4;

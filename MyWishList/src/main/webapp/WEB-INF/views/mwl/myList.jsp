@@ -19,6 +19,8 @@
 					<img alt="" src="${wishlist.img }">
 				</c:if>
 				<input type="hidden" name="wishNo" class="wishNo" value="${wishlist.wishNo }">
+			<span onclick="modify(${wishlist.wishNo })">수정</span>
+			<span onclick="del(${wishlist.wishNo })">삭제</span>
 			</div>
 		</c:forEach>
 	</div>
@@ -55,6 +57,18 @@
 		<input type="hidden" id="imsiWishNoMoney" value="">
 		<input type="hidden" id="imsiBank" value="">
 		<input type="hidden" id="imsiBankMoney" value="">
+	</div>
+	<div id="writeDiv">
+		<form action="myWishWrite.html" method="POST" enctype="multipart/form-data" name="myWishDto">
+			<span>품명</span><input type="text" name="product" id="product" class="input"><br>
+			<span>금액</span><input type="text" name="price" id="price" class="input"><br>
+			<span>기한</span><input type="date" name="remainDate" id="remainDate" class="input"><br>
+			<span>이미지</span><span id='imgSpan'><input type="hidden" id="img" name="img"></span><br>
+			<span>성공여부</span><input type="text" name="success" id="success" class="input"><br>
+			<input type="text" name="wishNo" id="wishNo" class="input">
+			<input type="submit" value="입력">
+			<input type="button" value="취소">
+		</form> 
 	</div>
 </body>
 </html>
