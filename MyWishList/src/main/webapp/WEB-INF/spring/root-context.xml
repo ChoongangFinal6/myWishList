@@ -27,10 +27,6 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
-	<bean id="careerAlarmService" class="controller.MWLController" />
-	<task:scheduler id="gsScheduler" pool-size="10" />
-	<task:executor id="gsTaskExecutor" pool-size="10" />
-	<task:annotation-driven executor="gsTaskExecutor" scheduler="gsScheduler" />
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 </beans>

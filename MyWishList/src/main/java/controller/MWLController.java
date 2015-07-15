@@ -365,13 +365,7 @@ System.out.println("AccountDto : "+account);
 		
 		return null;
 	}
-	
-/*	@Scheduled(fixedRate=5000)
-	public void sucessFail(){
-		System.out.println("5초마다 나온다.");
-		
-	}*/
-	
+
 	
 	// 계좌 관리 창 호출
 	@RequestMapping(value = "manageAccount")
