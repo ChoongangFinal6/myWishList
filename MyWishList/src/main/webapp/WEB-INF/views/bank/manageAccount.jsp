@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../mwl/header.jsp" %>
+<%@ include file="bank_template.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +23,7 @@
 	text-align: center;
 }
 
-#newAccount {
+#newAccountForm {
 	
 }
 </style>
@@ -81,14 +81,14 @@
 	// 잔고 변경
  	$(function(){
  		$('.moneyEdit').click(function(){
- 			console.log("event");
 			var flag = $(this).attr('id');
  			var form = $(this).parent();
 			var money = $("form > #money").val();
+			alert(money);
 			if(flag=='decr'){
 				$("form > #money").val(money*-1);
 			}
-			console.log($(form).children('#money').val());
+			//alert($(form).children('#money').val());
 			$(form).attr('action', 'editBalance.html').submit();
  		});
 	});
@@ -101,7 +101,8 @@
 
 </head>
 
-<body>
+<body style="padding:10 10 10 10;">
+
 <div id="accountList">
 	<table>
 		<tr>
@@ -116,7 +117,7 @@
 				<form action="#">
 					<input type="hidden" name="email" value="${sessionScope.email}">
 					<input type="hidden" name="account" value="${acc.account}">
-					<input type="text" name="money" id="money" >
+					<input type="number" name="money" id="money">
 					<button class="moneyEdit" id="incr">+</button>
 					<button class="moneyEdit" id="decr">-</button>
 					<!-- <button onclick="editBalance()">입출금</button> -->
@@ -130,7 +131,7 @@
 	</table>
 </div>
 
-<div id="newAccount">
+<div id="newAccountForm">
 	<form action="addNewAccount.html">
 	<input type="hidden" name="email" value="${sessionScope.email}">
 	은행<select name="bank" required="required">

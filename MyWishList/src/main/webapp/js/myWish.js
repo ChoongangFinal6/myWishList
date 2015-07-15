@@ -120,7 +120,6 @@ $(function() {
 		var account = $(this).val();
 		var wishNo = $('#imsiWishNo').val()
 		var sendData = "account=" + account + "&wishNo=" + wishNo;
-		alert(sendData);
 		$.getJSON('bankSelect.html', sendData, function(data) {
 			option.series[0].data = data;
 			$('#wishChart').highcharts(option);
