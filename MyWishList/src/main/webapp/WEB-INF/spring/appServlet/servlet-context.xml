@@ -14,7 +14,6 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-	<task:annotation-driven/>
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources 
 		directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -34,6 +33,7 @@
 
 	<context:component-scan base-package="controller,dao,service" />
 
-
+	<!-- 스케줄을 위해 추가 -->
+	<task:annotation-driven/>
 
 </beans:beans>

@@ -1,12 +1,8 @@
 /**
- * 
+ * WishList에 쓰이는 모든 js 모아둠
  */
 
 $(function() {
-	$('.openPopup').magnificPopup({
-		  type:'inline',
-		  midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
-		});
 	$('#account').keyup(function() {
 		var accountVal = "account=" + $(this).val();
 		$.ajax({
@@ -39,18 +35,10 @@ $(function() {
 	});
 
 	var option = {
-		chart : {
-			type : 'column'
-		}, // 차트의 형태를 결정
-		title : {
-			text : '위시리스트 진행상황'
-		}, // 제목
-		subtitle : {
-			text : ''
-		}, // 부제목
-		xAxis : {
-			type : 'category'
-		}, // 아래(x축)의 표현 형태
+		chart : {type : 'column'}, // 차트의 형태를 결정
+		title : {text : '위시리스트 진행상황'}, // 제목
+		subtitle : {text : ''}, // 부제목
+		xAxis : {type : 'category'}, // 아래(x축)의 표현 형태
 		yAxis : {
 			title : {
 				text : '목표 금액' // 왼쪽(y축)의 차트의 글씨
@@ -73,21 +61,8 @@ $(function() {
 
 		// 해당 차트에 mouse up 시에 보여주는 정보의 구성
 		tooltip : {
-			headerFormat : '<span style="font-size:11px"></span>', // series의
-																	// data에 있는
-																	// name값을
-																	// 가지고 온다.
-			pointFormat : '<span><b>{point.name}</b></span>: {point.y}원' // drilldown의
-																			// series의
-																			// 내용과
-																			// 맞는
-																			// 값을
-																			// 가지고
-																			// 온다.
-																			// point.y는
-																			// 위의
-																			// format과
-																			// 같다.
+			headerFormat : '<span style="font-size:11px"></span>', // series의 data에 있는 name값을 가지고 온다.
+			pointFormat : '<span><b>{point.name}</b></span>: {point.y}원' // drilldown의 series의 내용과 맞는 값을 가지고 온다. point.y는 위의 format과 같다.
 		},
 		// series 부분
 		series : [ {
@@ -95,9 +70,7 @@ $(function() {
 			colorByPoint : true
 		} ]
 	};
-/*	$('.wishDiv').on('click','img', function(e) {
-		e.stopImmediatePropagation();
-	});*/
+
 	$('.buttons').on('click', function(e) {
 		e.stopImmediatePropagation();
 	});
@@ -174,6 +147,17 @@ $(function() {
 	}).mouseout(function() {
 		$(this).next().removeClass('buttonOver');
 	});
+
+	$('#wishSucFailPage').change(function(){
+		var view = $(this).val();
+		console.log(view);
+		if(view == "All"){
+			location.href="myList.html";
+		}else{
+			location.href="mySucFailList.html?view="+view;
+		}
+	});
+	
 });
 function modify(wishNo) {
 	$('#modifyImg').remove();
@@ -192,12 +176,8 @@ function modify(wishNo) {
 			$('#imageInput').hide();
 			$('#imgSpan').append("<a id='modifyImg'>변경</a>");
 		}	
-/*		if (data.img == null || data.img == "" || data.img == "null") {
-			$('#imgSpan').html("<input type='file' name='image'>");
-		} else {
-			$('#imgSpan').html("<input type='hidden' name='image' value='"+ data.img +"'>"+"<a id='modifyImg'>변경</a>");
-		}	
-*/	});
+	});
+	
 }
 function newItem() {
 	$('.input').val("");
@@ -218,4 +198,27 @@ function del(wishNo) {
 			}
 		});
 	}
+}
+
+$(function(){
+	loadAccountList();		
+});
+
+// 계좌 관리 팝업창
+function manageAccount(){
+	var win = window.open("manageAccount.html", "계좌관리", "width=650, height=400,resizable=false");
+}
+
+// 계좌 목록 Load
+function loadAccountList(){
+	$.ajax({
+		url: "loadAccountList.html",
+		success : function(result) {
+			$('#mwl_acc_list').html(result);
+		}
+	});
+}
+
+function accountDetail(){
+	$('#accounDetail').toggle('1000');
 }

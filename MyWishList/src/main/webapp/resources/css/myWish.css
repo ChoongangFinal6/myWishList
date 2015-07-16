@@ -1,220 +1,89 @@
 @CHARSET "UTF-8";
-#myWishBody {
-	margin : 0px auto;
-	width: 960px;
-	padding-top: 20px;
-}
-#wishList {
+#myWishBody {margin : 0px auto; width: 960px; padding-top: 20px;}
+
+.openPopup {text-decoration: none; color: black;}
+
+.wishUl {width: 95%; list-style-type: none; margin: 0px auto; display: inline-table;}
+
+.wishLi {display: block; float: left; padding: 20px;}
+
+.wishDiv,.newDiv {width: 250px; height: 200px; overflow: hidden; margin: 0px;
+	border-radius: 20px; margin-top: 10px; padding: 5px;}
 	
-}
-.openPopup {
-	text-decoration: none;
-	color: black;
-}
-.wishUl {
-	width: 95%;
-	list-style-type: none;
-	margin: 0px auto;
-	display: inline-table;
-}
+.wishDiv {border: 2px solid black;}
 
-.wishLi {
-	display: block;
-	float: left;
-	padding: 20px;
-}
-.wishDiv,.newDiv {
-	width: 250px;
-	height: 200px;
-	overflow: hidden;
-	margin: 0px;
-	border-radius: 20px;
-	margin-top: 10px;
-	padding: 5px;
+.productSpan {font-family: "고딕체"; font-weight: bolder; font-size: 1.3em;}
+
+.newDiv {border: 2px dotted black; font-weight: 900; font-size: 3em; text-align: center;}
+
+#newADiv{padding-left : 80px;}
+
+.newDiv:hover {background-color: #d9d9d9;}
+
+.overDiv {background-color: #rgba(255, 255, 255, 0.7);}
+
+.imgDiv {overflow: hidden; width: 250px; text-align:center; height: 145px;}
+
+.imgDiv img {height : 100%;}
+
+.priceDiv, .remainDateDiv {position: relative; height: 28px; width: 250px; top: -30px;
+	text-align: left; padding-left : 19px; vertical-align: center; font-size: 1.2em;}
+
+.priceDiv {padding-left: 25px;}
+
+.buttons {position: relative; top: -30px; height: 30px; width: 250px;
+	background-color: rgba(0, 0, 0, 0.4); border-radius : 10px;	overflow : hidden;
+	opacity: 0; display : inline-table;	text-align: center;}
+
+.buttons:hover {opacity: 1;}
+
+.buttonOver {opacity: 1;}
+.buttonSpan {display: table-cell; width: 120px; font-weight: bolder; color: black; 
+	font-size:1.2em; text-shadow: 0px 0px 4px #ffffff, 0px 0px 4px #ffffff, 0px 0px 4px #ffffff;
+	cursor: pointer;}
 	
-}
-.wishDiv {
-	border: 2px solid black;
-}
+.buttonSpan:hover {opacity: 0.5;}
 
-.productSpan {
-	font-family: "고딕체";
-	font-weight: bolder;
-	font-size: 1.3em;
-}
+.newA {width: 100%; height: 100%;}
 
-.newDiv {
-	border: 2px dotted black;
-	font-weight: 900;
-	font-size: 3em;
-	text-align: center;
-}
-#newADiv{
-	padding-left : 80px;
-}
-.newDiv:hover {
-	background-color: #d9d9d9;
-}
-
-.overDiv {
-	background-color: #rgba(255, 255, 255, 0.7);
-}
-
-.imgDiv {
-	overflow: hidden;
-	width: 250px;
-	text-align:center;
-	height: 145px;
-}
-
-.imgDiv img {
-	height : 100%;
-/* 	min-width : 80%;
-	min-height: 80%;
-	max-width : 80%;
-	max-height: 80%; */
+#writeDiv {border: 2px solid blue; line-height: 35px; max-width: 400px; width: auto;
+	height: auto; position: relative; background: #FFF; margin : 20px auto;	padding: 20px;
+	border-radius : 20px;}
 	
-}
-
-.priceDiv, .remainDateDiv {
-	position: relative;
-	height: 28px;
-	width: 250px;
-	top: -30px;
-	text-align: left;
-	padding-left : 19px;
-	vertical-align: center;
-	font-size: 1.2em;
-}
-
-.remainDateDiv {
+.newAText {font-size: 1.2em; font-weight: bolder; border : 1px solid black;
+	border-radius : 12px; padding: 2px 5px 3px 5px; text-align: center;
+	box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);}
 	
-}
-
-.priceDiv {
-	padding-left: 25px;
-}
-
-.buttons {
-	position: relative;
-	top: -30px;
-	height: 30px;
-	width: 250px;
-	background-color: rgba(0, 0, 0, 0.4);
-	border-radius : 10px;
-	overflow : hidden;
-	opacity: 0;
-	display : inline-table;
-	text-align: center;
-}
-
-.buttons:hover {
-	opacity: 1;	
-}
-.buttonOver {
-	opacity: 1;
-}
-.buttonSpan {
-	display: table-cell;
-	width: 120px;
-	font-weight: bolder;
-	color: black;
-	font-size:1.2em;
-/* 	text-shadow : -1.5px 0 #ffffff, 0 1.5px #ffffff, 1.5px 0 #ffffff, 0 -1.5px #ffffff; */
-	text-shadow: 0px 0px 4px #ffffff, 0px 0px 4px #ffffff, 0px 0px 4px #ffffff;
-	cursor: pointer;
-}
-.buttonSpan:hover {
-	opacity: 0.5;
-}
-.newA {
-	width: 100%;
-	height: 100%;
-}
-#writeDiv {
-	border: 2px solid blue;
-	line-height: 35px;
-	max-width: 400px;
-	width: auto;
-	height: auto;
-	position: relative;
-	background: #FFF;
-	margin : 20px auto;
-	padding: 20px;
-	border-radius : 20px;
-}
-.newAText {
-	font-size: 1.2em;
-	font-weight: bolder;
-	border : 1px solid black;
-	border-radius : 12px;
-	padding: 2px 5px 3px 5px;
-	text-align: center;
-	box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
-}
-.newAText:HOVER {
-	background-color: #cae4ff;	
-}
+.newAText:HOVER {background-color: #cae4ff;}
 	
-.newAPlus {
-	font-size: 2.7em;
-	margin : 0px auto;
-}
-#pageForm {
-	text-align: center;
-}
-.pageUl {
-	list-style-type: none;
-	margin: 0px auto;
-	display: inline-table;
-	text-align: center;
-}
-.pageA {
-	text-decoration: none;
-	color: black;
-	background-color: #ffd7d7;
-	border: 1px solid black;
-	padding: 2px 5px 2px 5px;
-}
-.myListTopButton {
-	text-decoration: none;
-	color: white;
-	background-color: black;
-	border: 1px solid black;
-	padding: 2px 5px 2px 5px;
-}
-.pageA:hover {
-	background-color: #fff4f4;
-}
-.pageA span {
-	width: 20px;
-	height: 10px;
-	width: 40px;
-	height: 15px;
-}
-.pageLi {
-	display: inline;
-}
-.bold {
-	font-weight: bolder;
-}
-.forwardArrow {
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
-}
-.nextArrow {
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-}
+.newAPlus {font-size: 2.7em; margin : 0px auto;}
 
-th {
-	font-size:1.2em;
-}
-.writeInput {
-	font-size: 1.2em;
-	height: 1.3em;
-	border : 2px solid blue; 	
-}
-.input{
+#pageForm {text-align: center;}
+
+.pageUl {list-style-type: none; margin: 0px auto; display: inline-table; 
+	text-align: center;}
 	
-}
+.pageA {text-decoration: none; color: black; background-color: #ffd7d7;
+	border: 1px solid black; padding: 2px 5px;}
+	
+.myListTopButton {text-decoration: none; color: white; background-color: black;
+	border: 1px solid black; padding: 2px 5px;}
+.pageA:hover {background-color: #fff4f4;}
+
+.pageA span {width: 20px; height: 10px; width: 40px; height: 15px;}
+
+.pageLi {display: inline;}
+
+.bold {font-weight: bolder;}
+
+.forwardArrow {border-top-left-radius: 10px; border-bottom-left-radius: 10px;}
+
+.nextArrow {border-top-right-radius: 10px; border-bottom-right-radius: 10px;}
+
+th {font-size:1.2em;}
+
+.writeInput {font-size: 1.2em; height: 1.3em; border : 2px solid blue;}
+
+.bankTitle {padding: 3px; width: 50px; text-align: center;}
+
+.bankContent {text-align: center;}

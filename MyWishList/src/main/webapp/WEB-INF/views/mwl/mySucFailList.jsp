@@ -11,20 +11,30 @@
 </head>
 <body id="myWishBody">
 <c:if test="${view=='success' }">
-	<ul id="pageUl" class="pageUl">
+	<!-- <ul id="pageUl" class="pageUl">
 		<li>
 			<a class="myListTopButton" href="myList.html">진행</a>
 			<a class="myListTopButton" href="mySucFailList.html?view=fail">실패</a>
 		</li>
-	</ul>
+	</ul> -->
+	<select id="wishSucFailPage">
+		<option value="All">전체 페이지</option>
+		<option value="success" selected="selected">성공 페이지</option>
+		<option value="fail">실패 페이지</option>
+	</select>
 </c:if>
 <c:if test="${view=='fail' }">
-	<ul id="pageUl" class="pageUl">
+	<!-- <ul id="pageUl" class="pageUl">
 		<li>
 			<a class="myListTopButton" href="myList.html">진행</a>
 			<a class="myListTopButton" href="mySucFailList.html?view=success">성공</a>
 		</li>
-	</ul>
+	</ul> -->
+	<select id="wishSucFailPage">
+		<option value="All">전체 페이지</option>
+		<option value="success">성공 페이지</option>
+		<option value="fail" selected="selected">실패 페이지</option>
+	</select>
 </c:if>
 <!-- WishList -->	
 	<div id="wishList">
@@ -42,14 +52,17 @@
 								<img alt="img_${wishlist.product }" src="resources/img/noImg.gif">
 							</c:if>
 						</div>
-						<div class="priceDiv overDiv">금&nbsp;&nbsp;액 : <fmt:formatNumber pattern="#,###" value="${wishlist.price }"></fmt:formatNumber> 원</div>
+						<div class="buttons" style="opacity: 0;">
+							<span onclick="modify(${wishlist.wishNo })" class="buttonSpan"><a href='#writeDiv' class='openPopup'></a></span>
+							<span onclick="del(${wishlist.wishNo })" class="buttonSpan"></span>
+						</div>
+						<div class="priceDiv overDiv">금&nbsp;&nbsp;액 : <fmt:formatNumber pattern="#,###" value="${wishlist.price }"></fmt:formatNumber>원</div>
 						<div class="remainDateDiv overDiv">종료일 : <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd"/> 까지</div>
 						<input type="hidden" name="wishNo" class="wishNo" value="${wishlist.wishNo }">
 					</div>
 				</li>
 			</c:forEach>
 		</ul>
-		<div><a href='#writeDiv' class='openPopup newA newAText' onclick="newItem()">물건 추가</a></div>
 	</div>
 	<div id="pageForm">
 		<ul id="pageUl" class="pageUl">
@@ -70,11 +83,6 @@
 			<li class="pageUl"><a class="pageA nextArrow" href="myList.html?currentPage=${pg.startPage+pg.pageBlock }">▶</a></li>
 		</c:if>
 		</ul>
-	</div>
-	<div id="chart" style="display: none;">
-		<div id="wishChart" style="min-width: 310px; height: 400px; width:500px; margin: 0 auto">
-		</div>
-	</div>
-	
+	</div>	
 </body>
 </html>

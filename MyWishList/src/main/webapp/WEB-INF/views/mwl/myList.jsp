@@ -6,42 +6,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>My Wish List (${email })</title>
 <!-- Magnific Popup core CSS file -->
-<link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css"> 
-<!-- Magnific Popup core JS file -->
+<link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css">
 <script src="resources/magnific-popup/jquery.magnific-popup.js"></script>
+<!-- Magnific Popup core JS file -->
 <script type="text/javascript">
-	$(function(){
-		loadAccountList();		
+	$('.openPopup').magnificPopup({
+		type:'inline',
+		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
 	});
-
-	// 계좌 관리 팝업창
-	function manageAccount(){
-		var win = window.open("manageAccount.html", "계좌관리", "width=650, height=400,resizable=false");
-	}
-	
-	// 계좌 목록 Load
-	function loadAccountList(){
-		$.ajax({
-			url: "loadAccountList.html",
-			success : function(result) {
-				$('#mwl_acc_list').html(result);
-			}
-		});
-	}
-	
-	function accountDetail(){
-		$('#accounDetail').toggle('1000');
-	}
-	
 </script>
 </head>
 <body id="myWishBody">
-<ul id="pageUl" class="pageUl">
+<!-- <ul id="pageUl" class="pageUl">
 	<li>
 		<a class="myListTopButton" href="mySucFailList.html?view=success">성공</a>
 		<a class="myListTopButton" href="mySucFailList.html?view=fail">실패</a>
 	</li>
-</ul>
+</ul> -->
+<select id="wishSucFailPage">
+	<option value="All">전체 페이지</option>
+	<option value="success">성공 페이지</option>
+	<option value="fail">실패 페이지</option>
+</select>
 <!-- 계좌목록 -->
 	<div id="mwl_account">
 		계좌정보<button onclick="accountDetail()">상세</button><button onclick="manageAccount()">관리</button>

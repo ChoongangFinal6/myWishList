@@ -1,19 +1,5 @@
 -- MyWish
-ALTER TABLE MyWish
-	DROP CONSTRAINT FK_Account_TO_MyWish; -- Account -> MyWish
-
--- MyWish
-ALTER TABLE MyWish
-	DROP CONSTRAINT PK_MyWish; -- MyWish 기본키
-
--- Account
-ALTER TABLE Account
-	DROP CONSTRAINT PK_Account; -- Account 기본키
-
--- MyWish
 DROP TABLE MyWish;
-
-select * from MyWish where success=0;
 
 -- MyWish
 CREATE TABLE MyWish (

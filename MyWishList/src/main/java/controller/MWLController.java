@@ -394,9 +394,11 @@ public class MWLController {
 	// 잔고 변경
 	@RequestMapping(value="editBalance")
 	public String editBalance(@ModelAttribute AccountDto account, Model model){
-		System.out.println("CTRL:mwl/editBalance");
+	
 		int result = as.editBalance(account);
 		model.addAttribute("result", result);
+		
+		
 		return "forward:manageAccount.html";
 	}
 	

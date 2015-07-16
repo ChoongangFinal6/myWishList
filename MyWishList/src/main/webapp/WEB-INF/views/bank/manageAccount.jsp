@@ -73,24 +73,40 @@
 		default:
 			break;
 		}
-		
+		/* 
 		// 잔고변경버튼 클릭 이벤트
 		$('.moneyEdit').click(function() {
+			var formId = $(this).parent().attr('id');
+			alert( $('#'+formId).child('#money').val());
 			var flag = $(this).attr('id');
 			var form = $(this).parent();
-			var money = $("form > #money").val();
+			var money = $(".accountForm > .money").val();
+			$('.accountForm > #flag').val(flag);
+			alert(money);
+			alert(flag);
 			if (flag == 'decr') {
 				$("form > #money").val(money * -1);
 			}
 			//alert($(form).children('#money').val());
 			$(form).attr('action', 'editBalance.html').submit();
+		  	//editSubmit();
 		});
-
+ */
 		// 새계좌등록버튼 클릭 이벤트
 		$('#addNewAccountBtn').click(function(){
-			$('#newAccountForm').toggle('500');
+			$('#newAccountForm').toggle('500');	
 		});
 	});
+	
+	function plus(acc) {
+		$('#editForm'+acc).submit();
+	}	
+	
+	function minus(acc) {
+		var money = $('#money_'+acc).val();
+		$('#money_'+acc).val(money*-1);
+		$('#editForm'+acc).submit();
+	}
 
 	//	새 계좌 등록, 삭제 요청, 삭제확인 등 메세지 출력
 	function showMsg(msg) {
@@ -122,28 +138,29 @@
 
 	<div id="accountList">
 		<table>
-			<tr>
-				<th>은행</th>
-				<th>계좌번호</th>
-				<th>잔고</th>
-				<th>잔고 변경</th>
-				<th>삭제</th>
+			<tr style="margin: 5px;">
+				<th class="bankTitle">은행</th>
+				<th class="bankTitle" style="width: 130px;">계좌번호</th>
+				<th class="bankTitle" style="width: 60px;">잔고</th>
+				<th style="padding-left: 69px;">잔고 변경</th>
+				<th class="bankTitle">삭제</th>
 			</tr>
 			<c:forEach var="acc" items="${aList}">
 				<tr>
-					<td>${acc.bank}</td>
-					<td>${acc.account}</td>
-					<td>${acc.money}</td>
-					<td>
-						<form action="#" class="accountForm">
+					<td class="bankContent">${acc.bank}</td>
+					<td class="bankContent">${acc.account}</td>
+					<td class="bankContent">${acc.money}</td>
+					<td class="bankContent">
+						<form action="editBalance.html" class="accountForm" id="editForm${acc.account}">
 							<input type="hidden" name="email" value="${sessionScope.email}">
 							<input type="hidden" name="account" value="${acc.account}">
-							<input type="number" name="money" id="money">
-							<button class="moneyEdit" id="incr">+</button>
-							<button class="moneyEdit" id="decr">-</button>
+							<input type="number" name="money" class="money" id="money_${acc.account}">
+							<button class="moneyEdit" id="incr" onclick="plus('${acc.account}')">+</button>
+							<button class="moneyEdit" id="decr" onclick="minus('${acc.account}')">-</button>
 						</form>
 					</td>
-					<td><input style="margin-left: 6px; margin-top: 3px;" type="button" onclick="deleteConfirm('${acc.bank}','${acc.account}')" value="x" />
+					<td style="padding-left: 7px;">
+						<input style="margin-left: 6px; margin-top: 2px;" type="button" onclick="deleteConfirm('${acc.bank}','${acc.account}')" value="x" />
 					</td>
 				</tr>
 			</c:forEach>
