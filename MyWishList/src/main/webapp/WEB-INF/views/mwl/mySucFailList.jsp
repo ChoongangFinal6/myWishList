@@ -8,34 +8,24 @@
 <!-- Magnific Popup core CSS file -->
 <link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css"> 
 <!-- Magnific Popup core JS file -->
-<script src="resources/magnific-popup/jquery.magnific-popup.js"></script>
-<script type="text/javascript">
-	$(function(){
-		loadAccountList();		
-	});
-
-	// 계좌 관리 팝업창
-	function manageAccount(){
-		var win = window.open("manageAccount.html", "계좌관리", "width=500, height=400,resizable=false");
-	}
-	
-	// 계좌 목록 Load
-	function loadAccountList(){
-		$.ajax({
-			url: "loadAccountList.html",
-			success : function(result) {
-				$('#mwl_acc_list').html(result);
-			}
-		});
-	}
-	
-	function accountDetail(){
-		$('#accounDetail').toggle('1000');
-	}
-	
-</script>
 </head>
-<body>
+<body id="myWishBody">
+<c:if test="${view=='success' }">
+	<ul id="pageUl" class="pageUl">
+		<li>
+			<a class="myListTopButton" href="myList.html">진행</a>
+			<a class="myListTopButton" href="mySucFailList.html?view=fail">실패</a>
+		</li>
+	</ul>
+</c:if>
+<c:if test="${view=='fail' }">
+	<ul id="pageUl" class="pageUl">
+		<li>
+			<a class="myListTopButton" href="myList.html">진행</a>
+			<a class="myListTopButton" href="mySucFailList.html?view=success">성공</a>
+		</li>
+	</ul>
+</c:if>
 <!-- WishList -->	
 	<div id="wishList">
 		<ul id="wishUl" class="wishUl">
@@ -52,8 +42,8 @@
 								<img alt="img_${wishlist.product }" src="resources/img/noImg.gif">
 							</c:if>
 						</div>
-						<div class="priceDiv overDiv">${wishlist.price }</div>
-						<div class="remainDateDiv overDiv"><fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd"/></div>
+						<div class="priceDiv overDiv">금&nbsp;&nbsp;액 : <fmt:formatNumber pattern="#,###" value="${wishlist.price }"></fmt:formatNumber> 원</div>
+						<div class="remainDateDiv overDiv">종료일 : <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd"/> 까지</div>
 						<input type="hidden" name="wishNo" class="wishNo" value="${wishlist.wishNo }">
 					</div>
 				</li>
@@ -62,17 +52,25 @@
 		<div><a href='#writeDiv' class='openPopup newA newAText' onclick="newItem()">물건 추가</a></div>
 	</div>
 	<div id="pageForm">
+		<ul id="pageUl" class="pageUl">
 		<c:if test="${pg.startPage > pg.pageBlock }">
-			<a href="mySucFailList.html?view=${view }&currentPage=${pg.startPage-pg.pageBlock }">[이전]</a>
+			<li class="pageUl"><a class="pageA forwardArrow" href="mySucFailList.html?view=${view }&currentPage=${pg.startPage-pg.pageBlock }">◀</a></li>
 		</c:if>
 		<c:forEach var="i" begin="${pg.startPage }" end="${pg.endPage }">
-			<a href="mySucFailList.html?view=${view }&currentPage=${i }">[${i }]</a>
+			<li class="pageUl">
+				<c:if test="${pg.currentPage==i }">
+						<a class="pageA bold" href="mySucFailList.html?view=${view }&currentPage=${i }">${i }</a>
+				</c:if>
+				<c:if test="${pg.currentPage!=i }">
+						<a class="pageA" href="mySucFailList.html?view=${view }&currentPage=${i }">${i }</a>
+				</c:if>
+			</li>
 		</c:forEach>
 		<c:if test="${pg.endPage < pg.totalPage }">
-			<a href="mySucFailList.html?view=${view }&currentPage=${pg.startPage+pg.pageBlock }">[다음]</a>
+			<li class="pageUl"><a class="pageA nextArrow" href="myList.html?currentPage=${pg.startPage+pg.pageBlock }">▶</a></li>
 		</c:if>
+		</ul>
 	</div>
-	
 	<div id="chart" style="display: none;">
 		<div id="wishChart" style="min-width: 310px; height: 400px; width:500px; margin: 0 auto">
 		</div>
