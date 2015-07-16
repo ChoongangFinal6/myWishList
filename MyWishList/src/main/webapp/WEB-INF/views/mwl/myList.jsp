@@ -10,9 +10,11 @@
 <script src="resources/magnific-popup/jquery.magnific-popup.js"></script>
 <!-- Magnific Popup core JS file -->
 <script type="text/javascript">
-	$('.openPopup').magnificPopup({
-		type:'inline',
-		midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+	$(function(){
+		$('.openPopup').magnificPopup({
+			type:'inline',
+			midClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+		});
 	});
 </script>
 </head>

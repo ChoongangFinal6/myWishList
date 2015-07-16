@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+
+.fadeMsg {display: none; position: absolute; top: 100px; left: 100px; z-index: 10;
+	width: 300px; background-color: #44c767; border-radius: 28px; border: 1px solid #18ab29;
+	color: #ffffff; font-size: 15px; padding: 12px 20px; text-align: center;}
+
+#newAccountForm {float:right; display: none;}
+
+.accountForm {margin: 5px;}
+
+.inputStyle {margin-left: 10px;	color: black;}

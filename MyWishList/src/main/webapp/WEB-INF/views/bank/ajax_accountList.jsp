@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-#accounDetail {
-	display: none;
-	float:left;
-	position:absolute;
-	background-color: gray;
-}
+	#accounDetail {display: none; float:left; position:absolute; background-color: gray;}
 </style>
 <c:set var='sum' value='0'></c:set>
 <c:set var='count' value='0'></c:set>
